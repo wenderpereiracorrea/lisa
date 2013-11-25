@@ -1,0 +1,24 @@
+--
+-- Acionadores `pedidomovimentacao`
+--
+DROP TRIGGER IF EXISTS `tgr_movimenta_produtos_delete`;
+DELIMITER //
+CREATE TRIGGER `tgr_movimenta_produtos_delete` AFTER DELETE ON `pedidomovimentacao`
+ FOR EACH ROW BEGIN
+	UPDATE precoproduto 
+		SET quantidade = quantidade + OLD.quantidade 
+	WHERE idprecoproduto= OLD.precoproduto_idprecoproduto;
+END
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `tgr_movimenta_produtos_inser`;
+DELIMITER //
+CREATE TRIGGER `tgr_movimenta_produtos_inser` AFTER INSERT ON `pedidomovimentacao`
+ FOR EACH ROW BEGIN
+	UPDATE precoproduto 
+		SET quantidade = quantidade - NEW.quantidade 
+	WHERE idprecoproduto= NEW.precoproduto_idprecoproduto;
+END
+//
+DELIMITER ;
+
