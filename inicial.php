@@ -6,7 +6,7 @@ connect();
 ?>
 <html>
 <head>
-<title>Sige</title>
+<title>SIGE</title>
 </head>
 <frameset framespacing="0" border="0" frameborder="0" rows="52,*">
   <frame name="faixa" scrolling="no" noresize target="conteúdo" src="superior.php">

@@ -19,20 +19,9 @@ connect();
 	
 	</ul>
         <?
-		  $sql = "SELECT 
-				empe.codempenho,
-				empe.empenho,
-				empe.data,
-				empe.ativo,
-				forn.nome as nomefornecedor,
-				empe.fornecedor_codfornecedor
-					FROM
-						  empenho as empe,
-						  opcao as opr,
-						  fornecedor as forn
-					 where
-						codempenho = '1' and 
-						empe.ativo = opr.idopcao";
+          $sql = "SELECT * FROM empenho as empe,opcao as opr
+					where codempenho = '$empenho' and 
+					empe.ativo = opr.idopcao";
         mysql_query("SET NAMES 'utf8'");
         mysql_query('SET character_set_connection=utf8');
         mysql_query('SET character_set_client=utf8');
@@ -46,8 +35,7 @@ connect();
         $txtnomeempenho = ($array_exibir['nome']);
         $txtdata = ($array_exibir['data']);
         $txtativo = ($array_exibir['ativo']);
-        $txtativonome = ($array_exibir['nomefornecedor']);
-		$txtcodfornecedor = ($array_exibir['fornecedor_codfornecedor']);
+        $txtativonome = ($array_exibir['nome']);
             
         }
              
@@ -86,7 +74,7 @@ jQuery("#form1").validationEngine();
 });
 </script>
 <body>
-<form name="form1" id="form1" method="post" action="dao/usuarioinsert.php">
+<form name="form1" id="form1" method="post" action="dao/empenhoinsert.php">
 <!--=============================================================
     ADICIONADO PRODUTOS
     =============================================================-->
@@ -100,14 +88,17 @@ jQuery("#form1").validationEngine();
         name="txtlogin" value="<?php echo $txtempenho;?>" id="idtxtempenho" type="text"
         placeholder="Empenho" class="span10">
         <br />
+		
 		<label>Fornecedor</label>
-		<select class="validate[required]" name="cmbativo"
+		<select class="validate[required]" name="cmbfornecedor"
 					id="Select1">
-					<option value="<?php echo $txtcodfornecedor;?>">
-					<? echo $txtnome ?>
+					<option value="<?php echo $txtativo;?>">
+					<? echo $txtativonome ?>
 					</option>
 					<?
-					$sql = "SELECT * FROM fornecedor where ativo = '1'";
+					$sql = "SELECT  f.codfornecedor, f.nome 
+							FROM  empenho e, fornecedor f  
+							WHERE  f.codfornecedor=e.fornecedor_codfornecedor;";
 					mysql_query("SET NAMES 'utf8'");
 					mysql_query('SET character_set_connection=utf8');
 					mysql_query('SET character_set_client=utf8');
@@ -117,14 +108,14 @@ jQuery("#form1").validationEngine();
 					{
 					?>
 					<option value="<?echo $array_exibir['codfornecedor']?>">
-					<? echo strtoupper($array_exibir['nome'])?>
+					<? echo strtoupper($array_exibir['nome'])?> 
 					</option>
 					<?
 					$i++;
 					}
 					?>
 		</select>
-		<label>status</label>
+        <label>Status</label>
 		<select class="validate[required]" name="cmbativo"
 					id="Select1">
 					<option value="<?php echo $txtativo;?>">
@@ -148,6 +139,8 @@ jQuery("#form1").validationEngine();
 					}
 					?>
 		</select>
+		
+		</br>
         
             <? if(empty($_GET["empenho"])) {?>
 			<button type="submit" id="idinserir" name="inserir" value="inserir" class="btn btn-success"> <i class="icon-plus icon-white"></i> salvar </button>

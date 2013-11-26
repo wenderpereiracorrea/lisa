@@ -22,7 +22,7 @@
             
 			<a target="principal" href="listagemusuarios.php"> 
 			<img src="imagens/cadastrousuario.png" alt="" class="img-rounded" width="20" height="20" />
-			<h5> listagem usuários</h5> 
+			<h5> Listagem usuários</h5> 
 			</a>
 			<a target="principal" href="addusuario.php"> 
 			<img src="imagens/cadastrousuario.png" alt="" class="img-rounded" width="20" height="20" />
@@ -55,7 +55,7 @@
 			</a>
        		<a target="principal" href="addsetor.php"> 
 			<img src="imagens/setor.png" alt="" class="img-rounded" width="20" height="20" />
-			<h5> cadastro de Setor</h5> 
+			<h5> Cadastro de Setor</h5> 
 			</a>
 			<a target="principal" href="setor.php"> 
 			<img src="imagens/procurar.png" alt="" class="img-rounded" width="20" height="20" />
@@ -166,7 +166,7 @@
 			<img src="imagens/gestor.png" alt="" class="img-rounded" width="20" height="20" />
 			<h5> Relatorio Análitico</h5> 
 			</a> 
-			<a target="_top" href="relatoriosintetico.php"> 
+			<a target="principal" href="relatoriosintetico.php"> 
 			<img src="imagens/gestor.png" alt="" class="img-rounded" width="20" height="20" />
 			<h5> Relatótio Sintético </h5> 
 			</a>

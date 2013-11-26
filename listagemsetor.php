@@ -55,8 +55,7 @@ connect();
 		mysql_query('SET character_set_connection=utf8');
 		mysql_query('SET character_set_client=utf8');
 		mysql_query('SET character_set_results=utf8');
-		$Resultadoprodutospedido = mysql_query($sqlResultadoprodutospedido);
-		include "validaerrobanco.php";    
+		$Resultadoprodutospedido = mysql_query($sqlResultadoprodutospedido) or die("Erro: " . mysql_error());
 		$totalconsult = mysql_num_rows($Resultadoprodutospedido);
 		if ($totalconsult < 1) {
 			?>

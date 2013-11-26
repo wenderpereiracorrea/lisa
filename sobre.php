@@ -2,8 +2,9 @@
 include "header.php"; 
 ?>
 <fieldset>
-	<legend>Desenvolvedor</legend>
+	<legend>Desenvolvedores</legend>
 	<h3>Wender Pereira Corrêa</h3>
+	<h3>Vinicius Pandin Rodrigues</h3>
        
         <P>
         Fase de Produção
@@ -18,7 +19,7 @@ include "header.php";
         Scripts Client Side
         <br/>
         <br/>
-        wender.correa@funarte.gov.br
+        servicedesk-n1@funarte.gov.br
         <br/>
         <br/>
         +55 21 2279-8270 

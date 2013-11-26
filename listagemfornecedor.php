@@ -32,7 +32,7 @@ connect();
     <li class="active">
     <a href="listagemfornecedor.php">Listagem de Fornecedores</a>
     </li>
-    <li><a href="addfornecedor.php">Adiciona XXX</a></li>
+    <li><a href="addfornecedor.php">Adiciona Fornecedor</a></li>
 	
 	</ul>
     </div>

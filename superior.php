@@ -35,7 +35,7 @@ if (empty($_SESSION["login"])){
                 Login:<a href="#" class="navbar-link"> <? echo $_SESSION["login"];?> - <? echo $_SESSION["perfilusuario"];?> </a>
                 </p>
                 <ul class="nav">
-				<li><a  target="_Blank" href="view/html/Introducao.html" style="text-decoration: none"><i class="icon-question-sign icon-white"></i> Help</a></li>
+				<li><a  target="_Blank" href="view/html/FundacaocasadeRuiBarbosa.html" style="text-decoration: none"><i class="icon-question-sign icon-white"></i> Help</a></li>
 				<li><a  target="principal" href="view/help.pdf" style="text-decoration: none"><i class="icon-question-sign icon-white"></i> Help pdf</a></li>
                 <li><a  target="principal" href="sobre.php" style="text-decoration: none"><i class=" icon-info-sign icon-white"></i> Sobre</a></li>
                 <li><a target="_top" href="logout.php" style="text-decoration: none"><i class="icon-remove icon-white"></i> Logout</a></li>

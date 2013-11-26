@@ -18,6 +18,13 @@ while ($array_exibir = mysql_fetch_array($Resultado)) {
     $nomegrupo = ($array_exibir['nome']);
 }
 ?>
+
+<?php
+$data_ano = date("Y");
+$data_mes = date("m");
+$data_dia = date("d");
+
+?>
 <?
 
 function getArray1() {
@@ -33,7 +40,7 @@ function getArray1() {
 }
 
 $meuArray1 = getArray1();
-print_r($meuArray1);
+
 ?>
 <!--=============================================================
         BUSCA AJAX
@@ -58,18 +65,32 @@ print_r($meuArray1);
 </script>
 <form name="form1" id="form1" method="post" action="dao/usuarioinsert.php">
     <div class="container">
-        <label><H5>SERVIÇO DE ADMINISTRAÇÃO DE SERVIÇOS GERAIS - SASG</H5></label> 
-        <label><H5>RELÁTORIO DE MOVIMENTAÇÃO DE ALMOXARIFADO - RMA</H5></label> 
-        <label><H5>RELÁTORIO ANALÍTICO</H5></label> 
+		<a  align="left" target="_Blank" href="relatoriosintetico.php" style="text-decoration: none"><i class="icon-print"></i></a>
+        <label><H5 align="center">SERVIÇO DE ADMINISTRAÇÃO DE SERVIÇOS GERAIS - SASG </H5></label> 
+        <label><H5 align="center">RELÁTORIO DE MOVIMENTAÇÃO DE ALMOXARIFADO - RMA</H5></label> 
+        <label><H5 align="center">RELÁTORIO ANALÍTICO</H5></label> 
         <label><H5>UNIDADE GESTORA: FUNDAÇÃO CASA DE RUI BARBOSA</H5></label> 
         <label><H5>CÓDIGO DA UNIDADE GESTORA: 344001</H5></label> 
-        <label><H5>MÊS</H5></label> 
-        <label><H5>ANO</H5></label> 
+		<label><H5>GESTÃO: 34201</H5></label>
+        <label><H5>MÊS: <? if ($data_mes == 01){ echo "JANEIRO";}
+						else if ($data_mes == 02){ echo "FEVEREIRO";}
+						else if ($data_mes == 03){ echo "MARÇO";}
+						else if ($data_mes == 04){ echo "ABRIL";}
+						else if ($data_mes == 05){ echo "MAIO";}
+						else if ($data_mes == 06){ echo "JUNHO";}
+						else if ($data_mes == 07){ echo "JULHO";}
+						else if ($data_mes == 08){ echo "AGOSTO";}
+						else if ($data_mes == 09){ echo "SETEMBTO";}
+						else if ($data_mes == 10){ echo "OUTUBRO";}
+						else if ($data_mes == 11){ echo "NOVEMBRO";}						
+						else if ($data_mes == 12){ echo "DEZEMBRO";}?></H5></label> 
+        <label><H5>ANO: <? echo $data_ano; ?> </H5></label> 
     </div>
     <div class="container">
-        <legend><H4><i class="icon-shopping-cart"></i> Relátorio Analítico	</h4></legend>
+        <legend><!--<H4><i class="icon-shopping-cart"></i> Relátorio Analítico	</h4>--></legend>
         <?
-        $sqlResultadoprodutospedido = "SELECT *,(pedmov.quantidade * prevenda.preco) as saida
+        $sqlResultadoprodutospedido = "SELECT codgrupo, ( prevenda.quantidadeentrada * prevenda.preco) as saldo_anterior, 
+                                        (pedmov.quantidade * prevenda.preco) as saida
 									FROM 
 									produto AS prod,
 									categoria AS categ,sigen.pedido,
@@ -99,28 +120,28 @@ print_r($meuArray1);
             <div class="alert alert-block alert-error fade in">
                 <? echo "FAVOR REFINAR A CONSULTA SOMENTE OS PRIMEIROS 150 ITENS SÃO EXIBIDOS" ?>
             </div>
-            <table style="width: 100%; border: solid 1px #ddd;" class="table table-bordered" cellpadding="3" cellspacing="3">
+			<table style="width: 100%; border: solid 1px #ddd;" class="table table-bordered" cellpadding="3" cellspacing="3">
                 <tr>
                     <td style="background-color: #049cdb; color: #FFFFFF;"><b>ESPECIFICAÇÃO <br/>
                             33.90.30.00 - CONSUMO</b></td>
                     <td style="background-color: #049cdb; color: #FFFFFF;"><b>SALDO <br/> ANTERIOR</b></td>
-                    <td style="background-color: #049cdb; color: #FFFFFF;"><b>ORÇAMENTARIA</b></td>
-                    <td style="background-color: #049cdb; color: #FFFFFF;"><b>EXTRA <BR/>ORÇAMENTARIA</b></td>
-                    <td style="background-color: #049cdb; color: #FFFFFF;"><b>SAÍDA</b></td>
+                   <!-- <td style="background-color: #049cdb; color: #FFFFFF;"><b>ORÇAMENTARIA</b></td>
+                    <td style="background-color: #049cdb; color: #FFFFFF;"><b>EXTRA <BR/>ORÇAMENTARIA</b></td>-->
+                    <td style="background-color: #049cdb; color: #FFFFFF;"><b>SAÍDA</b></td> 
                     <td style="background-color: #049cdb; color: #FFFFFF;"><b>SALDO <BR/>ATUAL</td>
 
                     </td>
                 </tr>
-            <? } else { ?>
-                <span class="badge badge-info"><? echo "Total: $totalconsult" ?></span>
+			<? } else { ?>
+                <!--<span class="badge badge-info"><? echo "Total: $totalconsult" ?></span> -->
                 <table style="width: 100%; border: solid 1px #ddd;"	class="table table-bordered" cellpadding="4" cellspacing="4">
                     <tr>
                         <td style="background-color: #049cdb; color: #FFFFFF;"><b>ESPECIFICAÇÃO <br/>
                                 33.90.30.00 - CONSUMO</b></td>
-                        <td style="background-color: #049cdb; color: #FFFFFF;"><b>SALDO <br/> ANTERIOR</b></td>
-                        <td style="background-color: #049cdb; color: #FFFFFF;"><b>ORÇAMENTARIA</b></td>
-                        <td style="background-color: #049cdb; color: #FFFFFF;"><b>EXTRA <BR/>ORÇAMENTARIA</b></td>
-                        <td style="background-color: #049cdb; color: #FFFFFF;"><b>SAÍDA</b></td>
+                         <td style="background-color: #049cdb; color: #FFFFFF;"><b>SALDO <br/> ANTERIOR</b></td>
+                       <!-- <td style="background-color: #049cdb; color: #FFFFFF;"><b>ORÇAMENTARIA</b></td>
+                        <td style="background-color: #049cdb; color: #FFFFFF;"><b>EXTRA <BR/>ORÇAMENTARIA</b></td>-->
+                        <td style="background-color: #049cdb; color: #FFFFFF;"><b>SAÍDA</b></td> 
                         <td style="background-color: #049cdb; color: #FFFFFF;"><b>SALDO <BR/>ATUAL</td>
 
 
@@ -132,24 +153,56 @@ print_r($meuArray1);
                     ?><!-- Inicio da formação dos links para exibir a consulta -->
                     <tr>
                         <td><label><?php echo $array_exibir['codgrupo'] ?></label>
-                        <td><label><?php echo $array_exibir['nome'] ?></label>
-                        <td><label><?php echo $array_exibir['tel'] ?></label>
-                        <td><label><?php echo $array_exibir['cnpj'] ?></label>
-                            <?php $valor = ($array_exibir['saida']); ?>
-                        <td><label><?php echo number_format($valor, 2, ",", "."); ?></label>
-                        <td><label><?php echo $array_exibir['email'] ?></label>
+						<?php $valor_anterior = ($array_exibir['saldo_anterior']); ?>
+                        <td><label>R$ <?php echo number_format($valor_anterior, 2, ",", "."); ?></label>
+                        <!-- <td><label><?php echo $array_exibir['tel'] ?></label>
+                        <td><label><?php echo $array_exibir['cnpj'] ?></label> -->
+                        <?php $valorsaida = ($array_exibir['saida']); ?>
+                        <td><label>R$ <?php echo number_format($valorsaida, 2, ",", "."); ?></label>
+						<? $saldo_atual = $valor_anterior - $valorsaida; ?>
+						<td><label>R$ <?php echo number_format($saldo_atual, 2, ",", "."); ?></label>
+                        <!-- <td><label><?php echo $array_exibir['email'] ?></label> -->
                     </tr>
+					
+					<? $totalsaida += $valorsaida ?>			
+					<? $totalanterior += $valor_anterior ?>						
+					<? $total_saldoatual += $saldo_atual ?>
                     <?
                     $i++;
-                }
-                ?>
-                </fieldset>
+				}
+				?>	
+					<tr>
+						<td style="background-color: #049cdb; color: #FFFFFF;"><span><b>Total:  </span></td>
+						<td style="background-color: #049cdb; color: #FFFFFF;"><span><b>R$<? echo number_format($totalanterior,2,",",".");?></span></td>
+						<td style="background-color: #049cdb; color: #FFFFFF;"><span><b>R$<? echo number_format($totalsaida,2,",","."); ?></span></td>
+						<td style="background-color: #049cdb; color: #FFFFFF;"><span><b>R$<? echo number_format($total_saldoatual,2,",","."); ?></span></td>
+					</tr>
+				
+				</fieldset>
+				</div>
                 </div>
-                </div>
-
-                <script src="bootstrap/js/bootstrap-dropdown.js"></script>
+				<table>
+				<h5>Rio de Janeiro, <? echo $data_dia ?> de <?if ($data_mes == 01){ echo "JANEIRO";}
+						else if ($data_mes == 02){ echo "Fevereiro";}
+						else if ($data_mes == 03){ echo "Março";}
+						else if ($data_mes == 04){ echo "Abril";}
+						else if ($data_mes == 05){ echo "Maio";}
+						else if ($data_mes == 06){ echo "Junho";}
+						else if ($data_mes == 07){ echo "Julho";}
+						else if ($data_mes == 08){ echo "Agosto";}
+						else if ($data_mes == 09){ echo "Setembro";}
+						else if ($data_mes == 10){ echo "Outubro";}
+						else if ($data_mes == 11){ echo "Novembro";}						
+						else if ($data_mes == 12){ echo "Dezembro";} ?> de <? echo $data_ano ?>.</h5>
+				<table>
+				<table align="right">
+				<tr>
+				<td><h5>Valdemiro Martins Junior - Almoxarife Técnico </h5></td>
+				</tr>
+				<table>
+				<script src="bootstrap/js/bootstrap-dropdown.js"></script>
                 <script src="bootstrap/js/bootstrap-collapse.js"></script>
                 </div>
                 </div>
-                <? //include "footer.php"  ?>
+                <?// include "footer.php"  ?>
                 </form>

@@ -79,7 +79,7 @@ href="assets/ico/apple-touch-icon-57-precomposed.png">
 		});
 </script>
 <body>
-<form name="form1" id="form1" method="post" action="dao/produtogrupoinsert.php">
+<form name="form1" id="form1" method="post" action="dao/setorinsert.php">
 <!--=============================================================
 	ADICIONADO PRODUTOS
 	=============================================================-->
@@ -104,7 +104,8 @@ href="assets/ico/apple-touch-icon-57-precomposed.png">
 					<? echo $txtativonome ?>
 					</option>
 					<?
-					$sql = "SELECT * FROM opcao where categoria = '1'";
+					//$sql = "SELECT * FROM opcao where categoria = '1'";
+					$sql = "SELECT * FROM opcao";
 					mysql_query("SET NAMES 'utf8'");
 					mysql_query('SET character_set_connection=utf8');
 					mysql_query('SET character_set_client=utf8');

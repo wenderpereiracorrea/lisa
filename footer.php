@@ -18,7 +18,6 @@
 		Copyright Central IT 2013. All rights reserved. <img
 			src="imagens/logo.PNG" alt="" width="20%"
 			height="20%" style="display: block;" />
-			
 	</div>
 	</div>
 	

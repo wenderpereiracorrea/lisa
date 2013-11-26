@@ -45,7 +45,9 @@ connect();
 		-->
 		<legend><H4><i class="icon-shopping-cart"></i> LISTAGEM DE EMPENHO</h4></legend>
 		<?
-		$sqlResultadoprodutospedido = "SELECT * FROM EMPENHO as empe";
+		$sqlResultadoprodutospedido = "SELECT  e.codempenho,e.empenho,f.codfornecedor, f.nome, e.data
+									   FROM  empenho e, fornecedor f  
+									   WHERE  f.codfornecedor=e.fornecedor_codfornecedor;";
 		mysql_query("SET NAMES 'utf8'");
 		mysql_query('SET character_set_connection=utf8');
 		mysql_query('SET character_set_client=utf8');
