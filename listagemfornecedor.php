@@ -111,8 +111,8 @@ connect();
 						<td><label><?php echo $array_exibir['email'] ?></label>
 						<td><label><?php echo $array_exibir['numero'] ?></label>
 						<td><label><?php echo $array_exibir['obs'] ?></label>
-						<td><label><?php echo $array_exibir['data'] ?></label>
 						<td><label><?php echo $array_exibir['ativo'] ?></label>
+						<td><label><?php echo $array_exibir['data'] ?></label>
 						<td><a href="addfornecedor.php?modo=parc&fornecedor=<? echo $valprod ?>">
 							<i class="icon-pencil"></i> Editar</a>
 						</td>
