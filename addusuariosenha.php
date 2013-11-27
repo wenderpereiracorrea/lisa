@@ -42,6 +42,7 @@ connect();
             $txtsenha = ($array_exibir['senha']);
             $txtsetor = ($array_exibir['nomesetor']);
             $txtcodsetor = ($array_exibir['codsetor']);
+            $txttipo = ($array_exibir['tipousuario']);
             $txtEmail = ($array_exibir['email']);
             $txtativo = ($array_exibir['ativo']);
         }
@@ -103,12 +104,14 @@ jQuery("#form1").validationEngine();
         ===========================================================================-->
 
         <label>Email</label> 
-        <input value="<?php echo $txtEmail;?>" readonly="true" class="input-xlarge uneditable-input" name="txtnomesolicitante"
+        <input value="<?php echo $txtEmail;?>" readonly="true" class="input-xlarge uneditable-input" name="txtemail"
        id="Text1" type="text" placeholder="Email do usuário" class="span12">
         <br />
         <input type="hidden" name="cmbativo" value="<?php echo $txtativo;?>" />
+        <input type="hidden" name="cmbcategoria" value="<?php echo $txtsetor;?>" />
+        <input type="hidden" name="cmbtipousuario" value="<?php echo $txttipo;?>" />
         <div class="form-actions">
-            <button type="submit" name="atualizar" id="idatualizar" value="atualizar" class="btn btn-info"> <i class="icon-refresh icon-white"></i> atualizar</button>
+            <button type="submit" name="atualizarsenha" id="idatualizarsenha" value="atualizarsenha" class="btn btn-info"> <i class="icon-refresh icon-white"></i> atualizar</button>
             <!--<button type="submit" id="idinserir" name="inserir" value="inserir" class="btn btn-success"> <i class="icon-plus icon-white"></i> salvar	</button>-->
         </div>              
         </div>
