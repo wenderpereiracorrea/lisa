@@ -193,6 +193,7 @@ jQuery("#form1").validationEngine();
 			</div>
 			<table style="width: 100%; border: solid 1px #ddd;" class="table table-bordered" cellpadding="4" cellspacing="4">
                         <tr>
+						
                             <td style="background-color: #049cdb; color: #FFFFFF;"><b>id</b></td>
                                 <td style="background-color: #049cdb; color: #FFFFFF;"><b>id produto</b></td>
                                 <td style="background-color: #049cdb; color: #FFFFFF;"><b>medida</b>
@@ -239,7 +240,8 @@ jQuery("#form1").validationEngine();
 						<td><label><?php echo $array_exibir['medida'] ?></label>
 						<td><label><?php echo $array_exibir['nome'] ?></label>
 						<td><input type="text" class="input-xlarge uneditable-input span2" readonly="true" value="<?php echo $array_exibir['quantidade'] ?>"></td>
-						<td><input type="text" class="input-xlarge uneditable-input span2" readonly="true"  value="<?php echo $array_exibir['preco'] ?>"></td>
+						 <?php $valor1 = ($array_exibir['preco']); ?>
+						<td><input type="text" class="input-xlarge uneditable-input span2" readonly="true"  value="<?php echo number_format($valor1,2,",","."); ?>"></td>
                          <?php $valor = ($array_exibir['result']); ?>
                          <td><input type="text" class="input-xlarge uneditable-input span2" readonly="true"  value="<?php echo number_format($valor,2,",","."); ?>"></td>
 						<td><a href="addprodutos.php?modo=parc&idprocesso=<? echo $valprod ?>&idmovimentacao=<? echo $g_idpedido ?>">
@@ -252,10 +254,14 @@ jQuery("#form1").validationEngine();
 						<td><a href="dao/removerempenho.php?modo=parc&idproduto=<? echo $valprod ?>&idempenho=<? echo $empenho ?>" onclick="return confirm('Confirma exclusão do registro Id: <?php echo $array_exibir['codusuario'] ?>')"><i class="icon-trash"></i> Excluir</a>
 						<? } ?>
 						</td>
+						<? $total1 = $total1 + ($array_exibir['quantidade'] * $array_exibir['preco']); ?>
 				   </tr>
 					<?
 					$i++;
 				}
+				?> <span class="badge badge-info">R$ <?
+				echo number_format($total1,2,",",".");
+				?> </span> <?
 		?>
 
         <div class="alert-error" id="resposta"></div>

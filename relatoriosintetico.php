@@ -66,6 +66,7 @@ $meuArray1 = getArray1();
 <form name="form1" id="form1" method="post" action="dao/usuarioinsert.php">
     <div class="container">
 		<a  align="left" target="_Blank" href="relatoriosintetico.php" style="text-decoration: none"><i class="icon-print"></i></a>
+		<a href="#" onclick="window.print(); return false;">Imprimir</a>
         <label><H5 align="center">SERVIÇO DE ADMINISTRAÇÃO DE SERVIÇOS GERAIS - SASG </H5></label> 
         <label><H5 align="center">RELÁTORIO DE MOVIMENTAÇÃO DE ALMOXARIFADO - RMA</H5></label> 
         <label><H5 align="center">RELÁTORIO SINTÉTICO</H5></label> 
