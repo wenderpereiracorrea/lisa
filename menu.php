@@ -9,7 +9,7 @@
 	<div class="row-fluid">
 <div class="span2 ">
 <!-- Desenvolvedor -->			
- <? if ($_SESSION["tipousuario"] == '2') { ?>				
+ <? if ($_SESSION["tipousuario"] == '2' || $_SESSION["tipousuario"] == '1') { ?>				
 <div class="accordion" id="accordion2">
   <div class="accordion-group btn">
     <div class="accordion-heading">
@@ -199,7 +199,7 @@
 <? } ?>  <!-- Fim Desenvolvedor -->
 
 <!-- Administrador -->			
- <? if ($_SESSION["tipousuario"] == '1') { ?>				
+ <? if ($_SESSION["tipousuario"] == '5') { ?>				
 <div class="accordion" id="accordion2">
   <div class="accordion-group btn">
     <div class="accordion-heading">
