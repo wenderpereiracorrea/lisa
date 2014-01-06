@@ -75,13 +75,13 @@ connect();
 				</tr>
 			<? } else { ?>
 				<span class="badge badge-info"><? echo "Total: $totalconsult" ?></span>
-				<table style="width: 100%; border: solid 1px #ddd;"	class="table table-bordered" cellpadding="4" cellspacing="4">
+				<table style="width: 100%; border: solid 1px #ddd;"	class="table table-bordered" cellpadding="3" cellspacing="3">
 					<tr>
 					<td style="background-color: #049cdb; color: #FFFFFF;"><b>Cod</b></td>
 					<td style="background-color: #049cdb; color: #FFFFFF;"><b>Empenho</b></td>
 					<td style="background-color: #049cdb; color: #FFFFFF;"><b>Nome</b></td>
 					<td style="background-color: #049cdb; color: #FFFFFF;"><b>Data</b>
-					<td style="background-color: #049cdb; color: #FFFFFF;"><b><i class="icon-pencil icon-white"></i> Editar</b></td>
+					<td style="background-color: #049cdb; color: #FFFFFF;"><b><i class="icon-pencil icon-white"></i> Acessar</b></td>
 					</tr>
 				<? } ?>
 				<?
@@ -94,7 +94,7 @@ connect();
 						<td><label><?php echo $array_exibir['nome'] ?></label>
 						<td><label><?php echo $array_exibir['data'] ?></label>
 						<td><a href="addempenho.php?modo=parc&idempenho=<? echo $valprod ?>">
-							<i class="icon-pencil"></i> Editar</a>
+							<i class="icon-pencil"></i> Acessar</a>
 						</td>
 						
 				   </tr>
