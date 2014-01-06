@@ -46,7 +46,10 @@ connect();
 		<legend><H4><i class="icon-shopping-cart"></i> LISTAGEM DE PEDIDOS</h4></legend>
 		<?
 		$sqlResultadoprodutospedido = 
-		"SELECT * FROM pedido as pedid";
+		"SELECT *
+			FROM pedido as pedid,setor as setr
+			where pedid.setor_codigosetor = setr.codsetor
+			ORDER BY idpedido ASC";
 		mysql_query("SET NAMES 'utf8'");
 		mysql_query('SET character_set_connection=utf8');
 		mysql_query('SET character_set_client=utf8');
@@ -70,8 +73,7 @@ connect();
 					<td style="background-color: #049cdb; color: #FFFFFF;"><b>Nome</b></td>
 					<td style="background-color: #049cdb; color: #FFFFFF;"><b>Setor</b></td>
 					<td style="background-color: #049cdb; color: #FFFFFF;"><b>Data criação</b>
-					<td style="background-color: #049cdb; color: #FFFFFF;"><b>Data Fechamento</b>
-                    <td style="background-color: #049cdb; color: #FFFFFF;"><b>Usuário</b>                                            
+					<td style="background-color: #049cdb; color: #FFFFFF;"><b>Usuário</b>                                            
 					<td style="background-color: #049cdb; color: #FFFFFF;"><b><i class="icon-pencil icon-white"></i> Pedidos</b></td>
 					<td style="background-color: #049cdb; color: #FFFFFF;"><b><i class="icon-plus icon-white"></i> Editar nome pedido</b></td>
 					<? if ($_SESSION["tipousuario"] == '1') { ?>
@@ -88,8 +90,7 @@ connect();
 					<td style="background-color: #049cdb; color: #FFFFFF;"><b>Nome</b></td>
 					<td style="background-color: #049cdb; color: #FFFFFF;"><b>Setor</b></td>
 					<td style="background-color: #049cdb; color: #FFFFFF;"><b>Data criação</b>
-					<td style="background-color: #049cdb; color: #FFFFFF;"><b>Data Fechamento</b>
-                    <td style="background-color: #049cdb; color: #FFFFFF;"><b>Usuário</b>       
+					<td style="background-color: #049cdb; color: #FFFFFF;"><b>Usuário</b>       
 					<td style="background-color: #049cdb; color: #FFFFFF;"><b><i class="icon-pencil icon-white"></i> Pedidos</b></td>
 					<td style="background-color: #049cdb; color: #FFFFFF;"><b><i class="icon-plus icon-white"></i> Editar nome pedido</b></td>
 					<? if ($_SESSION["tipousuario"] == '1') { ?>
@@ -105,10 +106,9 @@ connect();
 						<td><label><?php echo $array_exibir['codpedido'] ?></label>
 						<td><label><?php echo $array_exibir['idpedido'] ?></label>
 						<td><label><?php echo $array_exibir['nome'] ?></label>
-						<td><label><?php echo $array_exibir['setor_codigosetor'] ?></label>
+						<td><label><?php echo $array_exibir['setr.nomesetor'] ?></label>
 						<td><input type="text" class="input-xlarge uneditable-input span2" readonly="true" value="<?php echo $array_exibir['datacriacao'] ?>"></td>
-						<td><input type="text" class="input-xlarge uneditable-input span2" readonly="true" value="<?php echo $array_exibir['datafechamento'] ?>"></td>
-                        <td><input type="text" class="input-xlarge uneditable-input span2"  readonly="true" value="<?php echo $array_exibir['usuario_codusuario'] ?>"></td>
+						<td><input type="text" class="input-xlarge uneditable-input span2"  readonly="true" value="<?php echo $array_exibir['usuario_codusuario'] ?>"></td>
 						<td><a href="movimentacao.php?G_idpedido=<? echo $valprod ?>">
 							<i class="icon-pencil"></i> Pedidos</a>
 						</td>
