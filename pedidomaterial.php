@@ -1,4 +1,4 @@
-<?
+﻿<?
 if(empty($_GET["idprecoproduto"])) {
 }else{
 $idprecoproduto = ($_GET["idprecoproduto"]);
@@ -101,12 +101,12 @@ jQuery("#form1").validationEngine();
        {
          ?>
          <option value="<?echo $array_exibir['codsetor']?>">
-         <? echo strtoupper($array_exibir['nomesetor'])?>
+         <? echo strtoupper($array_exibir['setor'])?>
          </option>
         <? $i++;  } ?>
         </select>
         <label>Solicitante</label> 
-        <input	value="<?php echo $txtnomesolicitante;?>" class="validate[required,minSize[4]]" name="txtnomesolicitante"
+        <input	value="<?php echo $txtnomesolicitante;?>" class="span4" name="txtnomesolicitante"
        id="idtxtnomesolicitante" type="text" placeholder="Nome Solicitante" class="span12">
         <div class="form-actions">
 			<? if(empty($_GET["G_idpedido"])) {?>
