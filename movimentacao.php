@@ -132,8 +132,11 @@ if(empty($_GET["G_idpedido"])) {
                                     BUSCA DE PRODUTOS
                                     =============================================================-->
                    
-                    <label id="lblpesquisaprodutos">Produtos</label>
-                    <select class="span10" onchange="buscaInstantanea();" name="cmbcategoria" id="pesquisaprodutos" >
+                    <? 
+					if(!empty($_GET["G_idpedido"])) {
+					?>
+					<label id="lblpesquisaprodutos">Produtos</label>
+					<select class="span10" onchange="buscaInstantanea();" name="cmbcategoria" id="pesquisaprodutos" >
                         <!--==============================================================================
                                 COMBO-BOX COM OS PEDIDOS EM ABERTO POR Pedido por solicitante
                             ===========================================================================-->
@@ -155,12 +158,13 @@ if(empty($_GET["G_idpedido"])) {
                         while ($array_exibir = mysql_fetch_array($Resultadopedidosolicitante)) {
                             ?>
                             <option value="<? echo $array_exibir['idproduto'] ?>">
-                                <? echo strtoupper($array_exibir['nome']) ?>
+                                <? echo strtoupper($array_exibir['nome']) ?> -> <? echo $array_exibir['idproduto'] ?>
                                 <!--............Preços disponiveis:--> <? //echo strtoupper($array_exibir['qtd']) ?>
                             </option>
                             <? $i++;
                         } ?>
-                    </select>   
+                    </select> 
+					<?}?>		
                     </br>
                     <div id="resultadoBusca">
                     </div>
