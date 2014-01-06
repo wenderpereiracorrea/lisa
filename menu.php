@@ -1,4 +1,4 @@
-<? include "header.php"; ?>
+﻿<? include "header.php"; ?>
 <? session_start(); ?>
 <?
 	include "conexao.php";
@@ -9,7 +9,7 @@
 	<div class="row-fluid">
 <div class="span2 ">
 <!-- Desenvolvedor -->			
- <? if ($_SESSION["tipousuario"] == '1') { ?>				
+ <? if ($_SESSION["tipousuario"] == '2') { ?>				
 <div class="accordion" id="accordion2">
   <div class="accordion-group btn">
     <div class="accordion-heading">
@@ -162,13 +162,13 @@
     </div>
     <div id="collapse7" class="accordion-body collapse">
       <div class="accordion-inner">
-            <a target="principal" href="relatorioanalitico.php"> 
+            <a target="principal" href="gerar_relatorio_analitico.php"> 
 			<img src="imagens/gestor.png" alt="" class="img-rounded" width="20" height="20" />
-			<h5> Relatorio Análitico</h5> 
+			<h5> Relatório Análitico </h5> 
 			</a> 
-			<a target="principal" href="relatoriosintetico.php"> 
+			<a target="principal" href="gerar_relatorio_sintetico.php"> 
 			<img src="imagens/gestor.png" alt="" class="img-rounded" width="20" height="20" />
-			<h5> Relatótio Sintético </h5> 
+			<h5> Relatório Sintético </h5> 
 			</a>
 	  </div>
 	  
@@ -199,7 +199,7 @@
 <? } ?>  <!-- Fim Desenvolvedor -->
 
 <!-- Administrador -->			
- <? if ($_SESSION["tipousuario"] == '2') { ?>				
+ <? if ($_SESSION["tipousuario"] == '1') { ?>				
 <div class="accordion" id="accordion2">
   <div class="accordion-group btn">
     <div class="accordion-heading">
