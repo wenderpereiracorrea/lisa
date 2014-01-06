@@ -4,6 +4,14 @@ include "conexao.php";
 connect();
 @session_start(); // Inicializa a sessão
 ?>
+
+<? 
+if(empty($_GET["mes"])) {
+}else{
+	$mes = ($_GET["mes"]);
+}
+?>
+
 <?
 $sql = "SELECT * FROM categoria
 			";
@@ -73,38 +81,99 @@ $meuArray1 = getArray1();
         <label><H5>UNIDADE GESTORA: FUNDAÇÃO CASA DE RUI BARBOSA</H5></label> 
         <label><H5>CÓDIGO DA UNIDADE GESTORA: 344001</H5></label> 
 		<label><H5>GESTÃO: 34201</H5></label>
-        <label><H5>MÊS: <? if ($data_mes == 01){ echo "JANEIRO";}
-						else if ($data_mes == 02){ echo "FEVEREIRO";}
-						else if ($data_mes == 03){ echo "MARÇO";}
-						else if ($data_mes == 04){ echo "ABRIL";}
-						else if ($data_mes == 05){ echo "MAIO";}
-						else if ($data_mes == 06){ echo "JUNHO";}
-						else if ($data_mes == 07){ echo "JULHO";}
-						else if ($data_mes == 08){ echo "AGOSTO";}
-						else if ($data_mes == 09){ echo "SETEMBTO";}
-						else if ($data_mes == 10){ echo "OUTUBRO";}
-						else if ($data_mes == 11){ echo "NOVEMBRO";}						
-						else if ($data_mes == 12){ echo "DEZEMBRO";}?></H5></label> 
+        <label><H5>MÊS: <?if ($mes == 01 || $mes == 1){ echo "JANEIRO";}
+						else if ($mes == 02 || $mes == 2){ echo "FEVEREIRO";}
+						else if ($mes == 03 || $mes == 3){ echo "MARÇO";}
+						else if ($mes == 04 || $mes == 4){ echo "ABRIL";}
+						else if ($mes == 05 || $mes == 5){ echo "MAIO";}
+						else if ($mes == 06 || $mes == 6){ echo "JUNHO";}
+						else if ($mes == 07 || $mes == 7){ echo "JULHO";}
+						else if ($mes == 08 || $mes == 8){ echo "AGOSTO";}
+						else if ($mes == 09 || $mes == 9){ echo "SETEMBRO";}
+						else if ($mes == 10){ echo "OUTUBRO";}
+						else if ($mes == 11){ echo "NOVEMBRO";}						
+						else if ($mes == 12){ echo "DEZEMBRO";}?></H5></label> 
         <label><H5>ANO: <? echo $data_ano; ?> </H5></label> 
     </div>
+	<?php
+		//echo $mes;
+		$mes_anterior = $mes - 01;
+		if($mes_anterior == -1){
+			$mes_anterior = 12;
+		}
+		//echo $mes_anterior;
+		//parent.window.location.reload(); 
+	?>
+	
+	<?
+        $sqlsaldoanterior = "select c.codgrupo, (pr.quantidade * pr.preco) as saldo_anterior from categoria c, precoproduto pr, produto p
+					where p.categoria_codcategoria = c.codcategoria
+					and p.idproduto = pr.produto_idproduto
+					and (DATE(pr.data) >= '2013-$mes_anterior-01' AND DATE(pr.data) <= '2013-$mes_anterior-31')
+					group by c.codgrupo";
+        mysql_query("SET NAMES 'utf8'");
+        mysql_query('SET character_set_connection=utf8');
+        mysql_query('SET character_set_client=utf8');
+        mysql_query('SET character_set_results=utf8');
+        $Resultadorelatorio = mysql_query($sqlsaldoanterior) or die("Erro: " . mysql_error());
+		while($row=mysql_fetch_array($Resultadorelatorio)){
+			$codgrupo = $row['codgrupo'];
+			$saldo = $row['saldo_anterior'];
+		  
+		   $sqlupdate =" update relatorio_analitico set saldo_anterior='$saldo' where codgrupo='$codgrupo'";
+		   
+			mysql_query($sqlupdate) or die("Erro: " . mysql_error());
+		}
+		$sqlentrada = "select c.codgrupo, (pr.quantidadeentrada * pr.preco) as entrada, (pm.quantidade * pr.preco) as saida
+							from categoria c, precoproduto pr, pedidomovimentacao pm, produto p, pedido pe
+							where p.categoria_codcategoria = c.codcategoria
+							and pr.idprecoproduto = pm.precoproduto_idprecoproduto
+							and pe.idpedido=pm.pedido_idpedido
+							and p.idproduto = pr.produto_idproduto
+							and (DATE(pm.data) >= '2013-$mes-01' AND DATE(pm.data) <= '2013-$mes-31')
+							group by codgrupo";
+        mysql_query("SET NAMES 'utf8'");
+        mysql_query('SET character_set_connection=utf8');
+        mysql_query('SET character_set_client=utf8');
+        mysql_query('SET character_set_results=utf8');
+        $Resultadorelatorio1 = mysql_query($sqlentrada) or die("Erro: " . mysql_error());
+		while($row1=mysql_fetch_array($Resultadorelatorio1)){
+			$codgrupo = $row1['codgrupo'];
+			$entrada = $row['entrada'];
+				
+		    $sqlupdate1 =" update relatorio_analitico set entrada='$entrada' where codgrupo='$codgrupo'";
+		   
+			mysql_query($sqlupdate1) or die("Erro: " . mysql_error());
+		}
+		$sqlsaida = "select c.codgrupo, (pm.quantidade * pr.preco) as saida
+						from categoria c, precoproduto pr, pedidomovimentacao pm, produto p, pedido pe
+						where p.categoria_codcategoria = c.codcategoria
+						and pr.idprecoproduto = pm.precoproduto_idprecoproduto
+						and pe.idpedido=pm.pedido_idpedido
+						and p.idproduto = pr.produto_idproduto
+						and (DATE(pm.data) >= '2013-$mes-01' AND DATE(pm.data) <= '2013-$mes-31')
+						group by codgrupo";
+        mysql_query("SET NAMES 'utf8'");
+        mysql_query('SET character_set_connection=utf8');
+        mysql_query('SET character_set_client=utf8');
+        mysql_query('SET character_set_results=utf8');
+        $Resultadorelatorio2 = mysql_query($sqlsaida) or die("Erro: " . mysql_error());
+		while($row2=mysql_fetch_array($Resultadorelatorio2)){
+			$codgrupo = $row2['codgrupo'];
+			$saida = $row2['saida'];
+		
+		    $sqlupdate2 =" update relatorio_analitico set saida='$saida' where codgrupo='$codgrupo'";
+		   
+			mysql_query($sqlupdate2) or die("Erro: " . mysql_error());
+		}
+		
+	?>
+	
     <div class="container">
         <legend><!--<H4><i class="icon-shopping-cart"></i> Relátorio Analítico	</h4>--></legend>
         <?
-        $sqlResultadoprodutospedido = "SELECT codgrupo, ( prevenda.quantidadeentrada * prevenda.preco) as saldo_anterior, 
-                                        (pedmov.quantidade * prevenda.preco) as saida
-									FROM 
-									produto AS prod,
-									categoria AS categ,sigen.pedido,
-									pedidomovimentacao AS pedmov,
-									pedido as pedid,
-									precoproduto as prevenda
-									WHERE
-									prod.categoria_codcategoria = categ.codcategoria AND
-									pedid.idpedido = pedmov.pedido_idpedido AND
-									prod.idproduto = prevenda.produto_idproduto AND
-									pedmov.precoproduto_idprecoproduto = prevenda.idprecoproduto
-									GROUP BY codgrupo
-									";
+        $sqlResultadoprodutospedido = "SELECT (SUM(saldo_anterior) + SUM(entrada) - SUM(saida)) AS total_saldo_atual, SUM(entrada), SUM(saida) 
+									   FROM relatorio_analitico";
         mysql_query("SET NAMES 'utf8'");
         mysql_query('SET character_set_connection=utf8');
         mysql_query('SET character_set_client=utf8');
@@ -135,16 +204,13 @@ $meuArray1 = getArray1();
 				</tr>
 				<? } else { ?>
                 <!--<span class="badge badge-info"><? echo "Total: $totalconsult" ?></span> -->
-                <table style="width: 100%; border: solid 1px #ddd;"	class="table table-condensed" cellpadding="4" cellspacing="4">
-					<? $valor_test = 20000; ?>
-					<? $valor_test1 = 0; ?>
-					<? $valor_test2 = 20000; ?>
-					<? $valor_test3 = 0; ?>
-					<? $valor_test4 = 20000; ?>
-					<? $valor_test5 = 0; ?>
-					<? $valor_test6 = 20000; ?>
-					<? $valor_test7 = 20000; ?>
-                    <tr>
+                <table style="width: 100%; border: solid 1px #ddd;"	class="table table-bordered" cellpadding="4" cellspacing="4">
+					<? 
+						$result = mysql_fetch_row($Resultadoprodutospedido);
+						$total_saldo_anterior = $result[0]; 
+						$total_entrada = $result[1]; 
+						$total_saida = $result[2];  ?>
+					<tr>
                        <td style="background-color: #049cdb; color: #FFFFFF;"><b>MOVIMENTAÇÃO</b></td>
                        <td colspan = "1" style="background-color: #049cdb; color: #FFFFFF;"><b>NATUREZA DO MATERIAL</b></td>
                        <td style="background-color: #049cdb; color: #FFFFFF;"></td>
@@ -156,21 +222,21 @@ $meuArray1 = getArray1();
 						<td style="background-color: #049cdb; color: #FFFFFF;"><b>TOTAL</b></td>
 					</tr>
 					<tr>
-						<td>Saldo em 01 de <?if (($data_mes - 1) == 01){ echo "Janeiro";}
-						else if ($data_mes - 1 == 02){ echo "Fevereiro";}
-						else if ($data_mes - 1 == 03){ echo "Março";}
-						else if ($data_mes - 1 == 04){ echo "Abril";}
-						else if ($data_mes - 1 == 05){ echo "Maio";}
-						else if ($data_mes - 1 == 06){ echo "Junho";}
-						else if ($data_mes - 1 == 07){ echo "Julho";}
-						else if ($data_mes - 1 == 08){ echo "Agosto";}
-						else if ($data_mes - 1 == 09){ echo "Setembro";}
-						else if ($data_mes - 1 == 10){ echo "Outubro";}
-						else if ($data_mes - 1 == 11){ echo "Novembro";}						
-						else if ($data_mes - 1 == 12){ echo "Dezembro";} ?> de <? echo $data_ano ?></td>
-						<td>. </td>
+						<td>Saldo em 01 de <?if ($mes_anterior == 01 || $mes_anterior == 1){ echo "Janeiro";}
+						else if ($mes_anterior == 02 || $mes_anterior == 2){ echo "Fevereiro";}
+						else if ($mes_anterior == 03 || $mes_anterior == 3){ echo "Março";}
+						else if ($mes_anterior == 04 || $mes_anterior == 4){ echo "Abril";}
+						else if ($mes_anterior == 05 || $mes_anterior == 5){ echo "Maio";}
+						else if ($mes_anterior == 06 || $mes_anterior == 6){ echo "Junho";}
+						else if ($mes_anterior == 07 || $mes_anterior == 7){ echo "Julho";}
+						else if ($mes_anterior == 08 || $mes_anterior == 8){ echo "Agosto";}
+						else if ($mes_anterior == 09 || $mes_anterior == 9){ echo "Setembro";}
+						else if ($mes_anterior == 10){ echo "Outubro";}
+						else if ($mes_anterior == 11){ echo "Novembro";}						
+						else if ($mes_anterior == 12){ echo "Dezembro";} ?> de <? echo $data_ano ?></td>
+						<td><label>R$ <?php echo number_format($total_saldo_anterior, 2, ",", "."); ?></td>
 						<td>.</td>
-						<td>.</td>
+						<td><label>R$ <?php echo number_format($total_saldo_anterior, 2, ",", "."); ?></td>
 					</tr>
 					<tr>
 						<td><b>ENTRADAS ORÇAMENTARIAS</b></td>
@@ -185,10 +251,10 @@ $meuArray1 = getArray1();
 						<td>.</td>
 					</tr>
 					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+						<td>.</td>
+						<td><label>R$ <?php echo number_format($total_entrada, 2, ",", ".");?></td>
+						<td>.</td>
+						<td><label>R$ <?php echo number_format($total_entrada, 2, ",", ".");?></td>
 					</tr>					
 					<tr>
 						<td><b>ENTRADAS EXTRAORÇAMENTARIAS</b></td>
@@ -210,7 +276,6 @@ $meuArray1 = getArray1();
 					</tr>
 					<tr>
 						<td>Por incorporação de bens e valores</td>
-						
 						<td>.</td>
 						<td>.</td>
 						<td>.</td>
@@ -222,25 +287,25 @@ $meuArray1 = getArray1();
 						<td>.</td>
 					</tr>
 					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+						<td>.</td>
+						<td>.</td>
+						<td>.</td>
+						<td>.</td>
 					</tr>
 					
-					<? $total_entrada = $valor_test + $valor_test1+$valor_test2 + $valor_test3+$valor_test4 + $valor_test5+$valor_test6 + $valor_test7 ?>
+					<? $total_entradas = $total_saldo_anterior + $total_entrada;  ?>
 					
 					<tr>
 						<td style="background-color: #049cdb; color: #FFFFFF;"><b>Total das entradas</b></td>
-						<td style="background-color: #049cdb; color: #FFFFFF;"><b>.</b></td>
+						<td style="background-color: #049cdb; color: #FFFFFF;"><b>R$ <?php echo number_format($total_entradas, 2, ",", ".");?></b></td>
 						<td style="background-color: #049cdb; color: #FFFFFF;">.</td>
-						<td style="background-color: #049cdb; color: #FFFFFF;"><b>.</b></td>
+						<td style="background-color: #049cdb; color: #FFFFFF;"><b>R$ <?php echo number_format($total_entradas, 2, ",", ".");?></b></td>
 					</tr>
 					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+						<td>.</td>
+						<td>.</td>
+						<td>.</td>
+						<td>.</td>
 					</tr>
 					<tr>
 						<td><b>SAÍDAS ORÇAMENTÁRIAS</b></td>
@@ -255,10 +320,10 @@ $meuArray1 = getArray1();
 						<td>.</td>
 					</tr>
 					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+						<td>.</td>
+						<td>.</td>
+						<td>.</td>
+						<td>.</td>
 					</tr>
 					<tr>
 						<td><b>SAÍDAS EXTRAORÇAMENTÁRIAS</b></td>
@@ -279,16 +344,22 @@ $meuArray1 = getArray1();
 						<td>.</td>
 					</tr>
 					<tr>
+						<td>.</td>
+						<td><label>R$ <?php echo number_format($total_saida, 2, ",", ".");?></td>
+						<td>.</td>
+						<td><label>R$ <?php echo number_format($total_saida, 2, ",", ".");?></td>
+					</tr>
+					<tr>
 						<td><b>Outras saídas</b></td>
 						<td>.</td>
 						<td>.</td>
 						<td>.</td>
 					</tr>
 					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+						<td>.</td>
+						<td>.</td>
+						<td>.</td>
+						<td>.</td>
 					</tr>
 					<tr>
 						<td><b>Consignação</b></td>
@@ -297,23 +368,23 @@ $meuArray1 = getArray1();
 						<td>.</td>
 					</tr>
 					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+						<td>.</td>
+						<td>.</td>
+						<td>.</td>
+						<td>.</td>
 					</tr>
-					<? $total_saida = $total_entrada - 40000?>
+					<? $saldo_final = $total_entradas - $total_saida?>
 					<tr>
 						<td style="background-color: #049cdb; color: #FFFFFF;"><b>Total das saídas</b></td>
-						<td style="background-color: #049cdb; color: #FFFFFF;"><b>.</b></td>
+						<td style="background-color: #049cdb; color: #FFFFFF;"><b>R$ <?php echo number_format($total_saida, 2, ",", ".");?></b></td>
 						<td style="background-color: #049cdb; color: #FFFFFF;">.</td>
-						<td style="background-color: #049cdb; color: #FFFFFF;"><b>.</b></td>
+						<td style="background-color: #049cdb; color: #FFFFFF;"><b>R$ <?php echo number_format($total_saida, 2, ",", ".");?></b></td>
 					</tr>
 					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+						<td>.</td>
+						<td>.</td>
+						<td>.</td>
+						<td>.</td>
 					</tr>
 					<tr>
 						<td style="background-color: #049cdb; color: #FFFFFF;"><b>Saldo em <? echo $data_dia ?> de <?if ($data_mes == 01){ echo "Janeiro";}
@@ -328,9 +399,9 @@ $meuArray1 = getArray1();
 						else if ($data_mes == 10){ echo "Outubro";}
 						else if ($data_mes == 11){ echo "Novembro";}						
 						else if ($data_mes == 12){ echo "Dezembro";} ?> de <? echo $data_ano ?></b></td>
-						<td style="background-color: #049cdb; color: #FFFFFF;"><b>.</b></td>
+						<td style="background-color: #049cdb; color: #FFFFFF;"><b>R$ <?php echo number_format($saldo_final, 2, ",", ".");?></b></td>
 						<td style="background-color: #049cdb; color: #FFFFFF;">.</td>
-						<td style="background-color: #049cdb; color: #FFFFFF;"><b>.</b></td>
+						<td style="background-color: #049cdb; color: #FFFFFF;"><b>R$ <?php echo number_format($saldo_final, 2, ",", ".");?></b></td>
 					</tr>
 					
                 <? } ?>
@@ -338,15 +409,15 @@ $meuArray1 = getArray1();
                 </fieldset>
 				</div>
 				<table>
-				<h5>Rio de Janeiro, <? echo $data_dia ?> de <?if ($data_mes == 01){ echo "Janeiro";}
-						else if ($data_mes == 02){ echo "Fevereiro";}
-						else if ($data_mes == 03){ echo "Março";}
-						else if ($data_mes == 04){ echo "Abril";}
-						else if ($data_mes == 05){ echo "Maio";}
-						else if ($data_mes == 06){ echo "Junho";}
-						else if ($data_mes == 07){ echo "Julho";}
-						else if ($data_mes == 08){ echo "Agosto";}
-						else if ($data_mes == 09){ echo "Setembro";}
+				<h5>Rio de Janeiro, <? echo $data_dia ?> de <?if ($data_mes == 01 || $data_mes == 1){ echo "Janeiro";}
+						else if ($data_mes == 02 || $data_mes == 2){ echo "Fevereiro";}
+						else if ($data_mes == 03 || $data_mes == 3){ echo "Março";}
+						else if ($data_mes == 04 || $data_mes == 4){ echo "Abril";}
+						else if ($data_mes == 05 || $data_mes == 5){ echo "Maio";}
+						else if ($data_mes == 06 || $data_mes == 6){ echo "Junho";}
+						else if ($data_mes == 07 || $data_mes == 7){ echo "Julho";}
+						else if ($data_mes == 08 || $data_mes == 8){ echo "Agosto";}
+						else if ($data_mes == 09 || $data_mes == 9){ echo "Setembro";}
 						else if ($data_mes == 10){ echo "Outubro";}
 						else if ($data_mes == 11){ echo "Novembro";}						
 						else if ($data_mes == 12){ echo "Dezembro";} ?> de <? echo $data_ano ?>.</h5>
