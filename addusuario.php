@@ -100,10 +100,10 @@ jQuery("#form1").validationEngine();
         name="txtlogin" value="<?php echo $txtlogin;?>" id="idtxtlogin" type="text"
         placeholder="Login do usuário" class="span10">
 		
-		<label>Senha:<?php echo $txtsenha;?></label> 
+		<label>Senha:</label> 
         <input type="hidden" name="txtsenha" value="<?php echo $txtcodusuario;?>" />
 		<input class="validate[required,minSize[6]]"
-        name="txtsenha" value="<?php echo $txtsenha;?>" id="idtxtsenha" type="text"
+        name="txtsenha" value="" id="idtxtsenha" type="text"
         placeholder="Senha do usuário" class="span10">
                  
         <label id="lblpesquisaprodutos">Setor</label>

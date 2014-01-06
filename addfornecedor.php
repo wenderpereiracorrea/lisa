@@ -100,15 +100,15 @@ jQuery("#form1").validationEngine();
         id="idtxtcnpj" type="text" placeholder="Telefone" class="span12" >
 		
 		<label>Endereco</label> 
-        <input	value="<?php echo $txtendereco;?>" class="validate[required,minSize[4]]" name="txtendereco"
+        <input	value="<?php echo $txtendereco;?>" class="" name="txtendereco"
         id="idtxtendereco" type="text" placeholder="Endereço" class="span12">
 		
         <label>Email</label> 
-        <input	value="<?php echo $txtemail;?>" class="validate[required,custom[email]] text-input" name="txtemail"
+        <input	value="<?php echo $txtemail;?>" class="text-input" name="txtemail"
        id="idtxtemail" type="text" placeholder="Email do usuário" class="span12">
 	   
 	   <label>Numero</label> 
-        <input	value="<?php echo $txtnumero;?>" class="validate[required,custom[integer]" name="txtnumero"
+        <input	value="<?php echo $txtnumero;?>" class="" name="txtnumero"
         id="idtxtnumero" type="text" placeholder="Numero" class="span12">
 		
 		<label>Obs</label> 

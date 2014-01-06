@@ -85,7 +85,7 @@ jQuery("#form1").validationEngine();
         <label>Numero</label> 
         <input type="hidden" name="txtcodempenho" value="<?php echo $txtcodempenho;?>" />
 		<input class="validate[required,minSize[6]]"
-        name="txtlogin" value="<?php echo $txtempenho;?>" id="idtxtempenho" type="text"
+        name="txtempenho" value="<?php echo $txtempenho;?>" id="idtxtempenho" type="text"
         placeholder="Empenho" class="span10">
         <br />
 		
@@ -96,9 +96,8 @@ jQuery("#form1").validationEngine();
 					<? echo $txtativonome ?>
 					</option>
 					<?
-					$sql = "SELECT  f.codfornecedor, f.nome 
-							FROM  empenho e, fornecedor f  
-							WHERE  f.codfornecedor=e.fornecedor_codfornecedor;";
+					$sql = "SELECT  f.codfornecedor, f.nome
+							FROM  fornecedor f;";
 					mysql_query("SET NAMES 'utf8'");
 					mysql_query('SET character_set_connection=utf8');
 					mysql_query('SET character_set_client=utf8');
@@ -109,6 +108,7 @@ jQuery("#form1").validationEngine();
 					?>
 					<option value="<?echo $array_exibir['codfornecedor']?>">
 					<? echo strtoupper($array_exibir['nome'])?> 
+					
 					</option>
 					<?
 					$i++;
@@ -143,7 +143,7 @@ jQuery("#form1").validationEngine();
 		</br>
         
             <? if(empty($_GET["empenho"])) {?>
-			<button type="submit" id="idinserir" name="inserir" value="inserir" class="btn btn-success"> <i class="icon-plus icon-white"></i> salvar </button>
+			<button type="submit" id="idinserir" name="salvar" value="salvar" class="btn btn-success"> <i class="icon-plus icon-white"></i> salvar </button>
 			<? }else{ ?>
 			<button type="submit" name="atualizar" id="idatualizar" value="atualizar" class="btn btn-info"> <i class="icon-refresh icon-white"></i> atualizar</button>
 			<? } ?>
@@ -156,7 +156,9 @@ jQuery("#form1").validationEngine();
 	 <form name="form1" id="form1" method="post" action="produtos.php">
 		<div class="form-actions">
 		<input type="hidden" name="txtcodempenho" value="<?php echo $txtcodempenho;?>" />
+		<? if(!empty($txtcodempenho)) {?>
 		<button type="submit" id="idinserir" name="inserir" value="inserir" class="btn btn-success"> <i class="icon-plus icon-white"></i> Add preço </button>
+		<?}?>
         </div>
 		<legend><H4><i class="icon-shopping-cart"></i> LISTAGEM DE PRODUTOS</h4></legend>
 		<?
@@ -193,7 +195,6 @@ jQuery("#form1").validationEngine();
 			</div>
 			<table style="width: 100%; border: solid 1px #ddd;" class="table table-bordered" cellpadding="4" cellspacing="4">
                         <tr>
-						
                             <td style="background-color: #049cdb; color: #FFFFFF;"><b>id</b></td>
                                 <td style="background-color: #049cdb; color: #FFFFFF;"><b>id produto</b></td>
                                 <td style="background-color: #049cdb; color: #FFFFFF;"><b>medida</b>
@@ -240,17 +241,16 @@ jQuery("#form1").validationEngine();
 						<td><label><?php echo $array_exibir['medida'] ?></label>
 						<td><label><?php echo $array_exibir['nome'] ?></label>
 						<td><input type="text" class="input-xlarge uneditable-input span2" readonly="true" value="<?php echo $array_exibir['quantidade'] ?>"></td>
-						 <?php $valor1 = ($array_exibir['preco']); ?>
-						<td><input type="text" class="input-xlarge uneditable-input span2" readonly="true"  value="<?php echo number_format($valor1,2,",","."); ?>"></td>
+						<td><input type="text" class="input-xlarge uneditable-input span2" readonly="true"  value="<?php echo $array_exibir['preco'] ?>"></td>
                          <?php $valor = ($array_exibir['result']); ?>
                          <td><input type="text" class="input-xlarge uneditable-input span2" readonly="true"  value="<?php echo number_format($valor,2,",","."); ?>"></td>
 						<td><a href="addprodutos.php?modo=parc&idprocesso=<? echo $valprod ?>&idmovimentacao=<? echo $g_idpedido ?>">
 							<i class="icon-pencil"></i> Editar</a>
 						</td>
-						<? if ($_SESSION["tipousuario"] == '1') { ?>
+						<? if ($_SESSION["tipousuario"] == '1' || $_SESSION["tipousuario"] == '2') { ?>
 						<td><a href="dao/removerempenho.php?modo=parc&idproduto=<? echo $valprod ?>&idempenho=<? echo $empenho ?>" onclick="return confirm('Confirma exclusão do registro Id: <?php echo $array_exibir['codusuario'] ?>')"><i class="icon-trash"></i> Excluir</a>
 						<? } ?>
-						<? if ($_SESSION["tipousuario"] == '2') { ?>
+						<? if ($_SESSION["tipousuario"] == '2' || $_SESSION["tipousuario"] == '1') { ?>
 						<td><a href="dao/removerempenho.php?modo=parc&idproduto=<? echo $valprod ?>&idempenho=<? echo $empenho ?>" onclick="return confirm('Confirma exclusão do registro Id: <?php echo $array_exibir['codusuario'] ?>')"><i class="icon-trash"></i> Excluir</a>
 						<? } ?>
 						</td>

@@ -5,13 +5,12 @@ if(isset($_POST["txtfichaproduto"])) {
 include "conexao.php";
 @session_start(); // Inicializa a sessão
 connect();
-$data = date('Y-m-d H:i:s');
 $idprocesso = isset( $_GET['idprocesso'] ) ? $_GET['idprocesso'] : 'valor_padrao';
 $produto = isset( $_GET['produto'] ) ? $_GET['produto'] : 'valor_padrao';
 $idprecoproduto = isset( $_GET['idprecoproduto'] ) ? $_GET['idprecoproduto'] : 'valor_padrao';
 $txtcodempenho = isset( $_POST['txtcodempenho'] ) ? $_POST['txtcodempenho'] : '';
 $txtcodproduto_post = isset( $_POST['cmbcategoriaprodutos'] ) ? $_POST['cmbcategoriaprodutos'] : 'valor_padrao';
-$data = date('Y-m-d H:i:s');
+$data = date('Y-m-d');
 ?>
 <!--======================================================================
     BOTÃO SUPERIOR DO FORMULARIO
@@ -84,7 +83,7 @@ $data = date('Y-m-d H:i:s');
 	<input type="hidden" name="txtcmbcategoria" value="<?php echo $txtcodproduto_post;?>" />
 		<fieldset>
 			<div class="span6">
-			<H5><i class="icon-barcode"></i> Lançamçamento Preço de Produto</H5> 
+			<H5><i class="icon-barcode"></i> Lançamento Preço de Produto</H5> 
 				<label> Empenho Nº: <? echo $txtcodempenho; ?> </label>
 				<label>Ficha</label> 
 				<input class="validate[required,custom[number],minSize[1]]"
