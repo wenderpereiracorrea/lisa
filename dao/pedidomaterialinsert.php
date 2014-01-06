@@ -11,7 +11,7 @@ $txtnomesolicitante = trim($_POST["txtnomesolicitante"]);
 $_SESSION["Ficha"] = $_POST["cmbcategoria"];
 $txtlogininsercao = $_SESSION["codusuario"];
 
-if(!($txtnumeropedido) || !($txtnomesolicitante )){
+if(!($txtnumeropedido)){
 	print "Preencha todos os campos!";
 	exit();
 }

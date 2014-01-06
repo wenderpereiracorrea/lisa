@@ -10,6 +10,11 @@ if(empty($_GET["cmbprodutos"])) { }else{
 
 $txtcmbprecoprodutobaixa = trim($_POST["cmbprecoprodutobaixa"]);
 $txtquantidadepedido = trim($_POST["txtquantidadepedido"]);
+if ($_SESSION["tipousuario"] == '1'){
+	$txtusuario = 1;
+	}else{
+	$txtusuario = 2;
+	}
 //======================================================
 //Conectar
 //======================================================
@@ -25,7 +30,7 @@ if ($_POST[adicionar] == "adicionar")
 $consulta = "INSERT INTO pedidomovimentacao
 				(pedido_idpedido,precoproduto_idprecoproduto,quantidade,usuariosistema,data)
 				VALUES
-				('$txtidpedido','$txtcmbprecoprodutobaixa','$txtquantidadepedido','0','$data')";
+				('$txtidpedido','$txtcmbprecoprodutobaixa','$txtquantidadepedido','$txtusuario','$data')";
 				mysql_query("SET NAMES 'utf8'");
 				mysql_query('SET character_set_connection=utf8');
 				mysql_query('SET character_set_client=utf8');

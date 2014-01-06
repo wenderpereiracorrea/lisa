@@ -7,6 +7,7 @@
  $txtpreco = moeda($_POST['txtpreco']);
  $txtquantidade = trim($_POST["txtquantidade"]);
  $txtcodempenho = trim($_POST["txtcodempenho"]);
+ $data = trim($_POST["txtcodempenho"]);
  function moeda($get_valor) {
 		$source = array('.', ','); 
 		$replace = array('', '.');
@@ -26,8 +27,8 @@ $data = date('Y-m-d H:i:s');
 //======================================================
 if ($_POST[inserir] == "inserir")
 {
-$consulta = "INSERT INTO precoproduto (empenho_codempenho,produto_codproduto,produto_idproduto, preco, quantidade,quantidadeentrada, ativo) 
-             VALUES ('$txtcodempenho','$txtcodproduto','$txtfichaproduto','$txtpreco','$txtquantidade','$txtquantidade','1')";
+$consulta = "INSERT INTO precoproduto (empenho_codempenho,produto_codproduto,produto_idproduto, preco, quantidade,quantidadeentrada, ativo, data) 
+             VALUES ('$txtcodempenho','$txtcodproduto','$txtfichaproduto','$txtpreco','$txtquantidade','$txtquantidade','1','$data')";
 		mysql_query("SET NAMES 'utf8'");
 		mysql_query('SET character_set_connection=utf8');
 		mysql_query('SET character_set_client=utf8');

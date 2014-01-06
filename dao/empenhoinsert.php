@@ -4,10 +4,10 @@
 // Valores
 //======================================================
 $txtcodempenho = trim($_POST["txtcodempenho"]);
+$txtempenho = trim($_POST["txtempenho"]);
 $txtfornecedor = trim($_POST["cmbfornecedor"]);
-$txtfornecedor = trim($_POST["cmbfornecedor"]);
-$cmbativo = ($_POST["cmbativo"]);
 $data = date('Y-m-d H:i:s');
+$cmbativo = ($_POST["cmbativo"]);
 //======================================================
 //Conectar
 //======================================================
@@ -23,7 +23,7 @@ if ($_POST[salvar] == "salvar")
 $consulta = "INSERT INTO empenho
 		(empenho,fornecedor_codfornecedor,data,ativo)
 		VALUES
-		('$txtcodempenho', '$txtfornecedor','$data','$cmbativo')";
+		('$txtempenho', '$txtfornecedor','$data','$cmbativo')";
 		mysql_query("SET NAMES 'utf8'");
 		mysql_query('SET character_set_connection=utf8');
 		mysql_query('SET character_set_client=utf8');
