@@ -59,10 +59,10 @@ $consulta = "UPDATE  produto
 			  quantidademinima = '$txtquantidademinima',
 			  quantidademaxima = '$txtquantidademaxima',
 			  descricao = '$txtdescricao',
-			  categoria_codcategoria = '$cmbcategoria',
+			  categoria_codcategoria = '$cmbcategoriacodcategoria',
 			  unidademedida_codunidademedida = '$cmbunidademedida',
 			  ativo = '1',
-                          data = '$data'
+              data = '$data'
 			 WHERE idproduto = '$txtfichaproduto'";
 			mysql_query("SET NAMES 'utf8'");
 			mysql_query('SET character_set_connection=utf8');
