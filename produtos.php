@@ -94,9 +94,9 @@ $cmbcategoria = isset( $_POST['cmbcategoria'] ) ? $_POST['cmbcategoria'] : 'valo
 				        <option value="<?echo $array_exibir['codcategoria']?>">
 					<? echo strtoupper($array_exibir['codgrupo'])?> --
 				        <? echo strtoupper($array_exibir['nome'])?>
-                                        -- Produtos:<? echo strtoupper($array_exibir['qtd'])?>
-                                        </option>
-                                        <?
+                        -- Produtos:<? echo strtoupper($array_exibir['qtd'])?>
+                          </option>
+                                 <?
 					$i++;
 			                }
 				        ?>
@@ -115,21 +115,21 @@ $cmbcategoria = isset( $_POST['cmbcategoria'] ) ? $_POST['cmbcategoria'] : 'valo
 				<?  $sql = "SELECT * FROM produto
                                      Where categoria_codcategoria ='$cmbcategoria'
                                      order by nome desc;";
-					mysql_query("SET NAMES 'utf8'");
-					mysql_query('SET character_set_connection=utf8');
-					mysql_query('SET character_set_client=utf8');
-					mysql_query('SET character_set_results=utf8');
-					   $Resultado = mysql_query($sql) or die("Erro: " . mysql_error());
-					   $i=0;
-					   $data = array();
-					   while ($array_exibir = mysql_fetch_array($Resultado)) 
-					   {
-                                            ?>
-                                            <option value="<?echo $array_exibir['idproduto']?>">
-                                            <? echo strtoupper($array_exibir['nome'])?>
-                                            </option><?
-                                            $i++;
-				   }
+				mysql_query("SET NAMES 'utf8'");
+				mysql_query('SET character_set_connection=utf8');
+				mysql_query('SET character_set_client=utf8');
+				mysql_query('SET character_set_results=utf8');
+				   $Resultado = mysql_query($sql) or die("Erro: " . mysql_error());
+				   $i=0;
+				   $data = array();
+				while ($array_exibir = mysql_fetch_array($Resultado)) 
+				{
+				 ?>
+				 <option value="<?echo $array_exibir['idproduto']?>">
+				 <? echo strtoupper($array_exibir['nome'])?> ----><?echo $array_exibir['idproduto']?>
+				 </option><?
+				$i++;
+				}
 				?>
 			</select>
 			</div>
