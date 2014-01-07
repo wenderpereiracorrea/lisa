@@ -78,11 +78,12 @@ connect();
                         <tr>
 								<td style="background-color: #049cdb; color: #FFFFFF;"><b>id</b></td>
 								<td style="background-color: #049cdb; color: #FFFFFF;"><b>Empenho</b></td>
-                                <td style="background-color: #049cdb; color: #FFFFFF;"><b>id produto</b></td>
-                                <td style="background-color: #049cdb; color: #FFFFFF;"><b>medida</b>
-								<td style="background-color: #049cdb; color: #FFFFFF;"><b>nome</b></td>
-								<td style="background-color: #049cdb; color: #FFFFFF;"><b>quantidade</b>
-                                <td style="background-color: #049cdb; color: #FFFFFF;"><b>preço</b>
+                                <td style="background-color: #049cdb; color: #FFFFFF;"><b>Id produto</b></td>
+                                <td style="background-color: #049cdb; color: #FFFFFF;"><b>Medida</b>
+								<td style="background-color: #049cdb; color: #FFFFFF;"><b>Nome</b></td>
+								<td style="background-color: #049cdb; color: #FFFFFF;"><b>Quantidade Minima</b>
+								<td style="background-color: #049cdb; color: #FFFFFF;"><b>Quantidade</b>
+                                <td style="background-color: #049cdb; color: #FFFFFF;"><b>Preço</b>
                                 <td style="background-color: #049cdb; color: #FFFFFF;"><b>Total</b>
                                 <td style="background-color: #049cdb; color: #FFFFFF;"><b><i class="icon-pencil icon-white"></i> Editar</b></td>
 									<? if ($_SESSION["tipousuario"] == '1') { ?>
@@ -99,7 +100,8 @@ connect();
                                         <td style="background-color: #049cdb; color: #FFFFFF;"><b>id produto</b></td>
                                         <td style="background-color: #049cdb; color: #FFFFFF;"><b>medida</b>
 										<td style="background-color: #049cdb; color: #FFFFFF;"><b>nome</b></td>
-										<td style="background-color: #049cdb; color: #FFFFFF;"><b>quantidade</b>
+										<td style="background-color: #049cdb; color: #FFFFFF;"><b>Quantidade Minima</b>
+										<td style="background-color: #049cdb; color: #FFFFFF;"><b>Quantidade</b>
                                         <td style="background-color: #049cdb; color: #FFFFFF;"><b>preço</b>
                                         <td style="background-color: #049cdb; color: #FFFFFF;"><b>Total</b>
                                         <td style="background-color: #049cdb; color: #FFFFFF;"><b><i class="icon-pencil icon-white"></i> Editar</b></td>
@@ -118,6 +120,11 @@ connect();
 						<td><label><?php echo $array_exibir['produto_idproduto'] ?></label>
 						<td><label><?php echo $array_exibir['medida'] ?></label>
 						<td><label><?php echo $array_exibir['nome'] ?></label>
+						<? if ($array_exibir['quantidademinima'] < $array_exibir['quantidade']) { ?>
+						<td><span class="label label-important"><?php echo $array_exibir['quantidademinima'] ?></span></td>
+						<? }else{ ?>
+						<td><input type="text" class="input-xlarge uneditable-input span1" readonly="true" value="<?php echo $array_exibir['quantidademinima'] ?>"></td>
+						<? } ?>
 						<td><input type="text" class="input-xlarge uneditable-input span1" readonly="true" value="<?php echo $array_exibir['quantidade'] ?>"></td>
 						<?php $preco = ($array_exibir['preco']); ?>
 						<td><input type="text" class="input-xlarge uneditable-input span2" readonly="true"  value="<?php echo number_format($preco,2,",","."); ?>"></td>
