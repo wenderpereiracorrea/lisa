@@ -34,8 +34,7 @@ connect();
     <li>
     <a href="listagemproduto.php">Listagem Produto</a>
     </li>
-    <li><a href="produtos.php">Produtos</a></li>
-	<li class="active"><a href="produtogrupo.php">Alterar Grupo do Produto</a></li>
+    <li class="active"><a href="produtogrupo.php">Alterar Grupo do Produto</a></li>
 	<li><a href="addprodutos.php">Adicionar grupo de Produto</a></li>
 	</ul>
 		<fieldset>

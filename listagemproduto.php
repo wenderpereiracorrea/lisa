@@ -32,8 +32,7 @@ connect();
     <li class="active">
     <a href="listagemproduto.php">Listagem Produto</a>
     </li>
-    <li><a href="produtos.php">Produtos</a></li>
-	<li><a href="produtogrupo.php">Alterar Grupo do Produto</a></li>
+    <li><a href="produtogrupo.php">Alterar Grupo do Produto</a></li>
 	<li><a href="addprodutos.php">Adicionar grupo de Produto</a></li>
 	</ul>
 		<!--
@@ -43,7 +42,7 @@ connect();
 		==========================================================================
 		==========================================================================
 		-->
-		<legend><H4><i class="icon-shopping-cart"></i> LISTAGEM DE PRODUTOS</h4></legend>
+		<legend><H4><i class="icon-shopping-cart"></i> Estoque Atual</h4></legend>
 		<?
                 $sqlResultadoprodutospedido = 
                 "SELECT	preprod . *,
@@ -58,8 +57,7 @@ connect();
 					   WHERE
 					   preprod.produto_idproduto = produt.idproduto and
 					   produt.unidademedida_codunidademedida  = unimed.codunidademedida
-					   order by nome asc
-                 ";
+					   order by nome asc";
 				mysql_query("SET NAMES 'utf8'");
 				mysql_query('SET character_set_connection=utf8');
 				mysql_query('SET character_set_client=utf8');
@@ -72,7 +70,7 @@ connect();
                 <!--=============================================================
                 JS
                 =============================================================-->
-		<? } elseif ($totalconsult >= 1550) { ?>
+		<? } elseif ($totalconsult >= 21550) { ?>
 			<div class="alert alert-block alert-error fade in">
 				<? echo "FAVOR ENTRAR EM CONTATO COM ADMINISTRADOR DO SISTEMA PARA OTIMIZAÇÃO DO BANCO DE DADOS" ?>
 			</div>
@@ -121,7 +119,8 @@ connect();
 						<td><label><?php echo $array_exibir['medida'] ?></label>
 						<td><label><?php echo $array_exibir['nome'] ?></label>
 						<td><input type="text" class="input-xlarge uneditable-input span1" readonly="true" value="<?php echo $array_exibir['quantidade'] ?>"></td>
-						<td><input type="text" class="input-xlarge uneditable-input span2" readonly="true"  value="<?php echo $array_exibir['preco'] ?>"></td>
+						<?php $preco = ($array_exibir['preco']); ?>
+						<td><input type="text" class="input-xlarge uneditable-input span2" readonly="true"  value="<?php echo number_format($preco,2,",","."); ?>"></td>
                          <?php $valor = ($array_exibir['result']); ?>
                          <td><input type="text" class="input-xlarge uneditable-input span2" readonly="true"  value="<?php echo number_format($valor,2,",","."); ?>"></td>
 						<td><a href="addprodutos.php?modo=parc&idprocesso=<? echo $valprod ?>&idmovimentacao=<? echo $g_idpedido ?>">
@@ -132,9 +131,13 @@ connect();
                    		<? } ?>
 						</td>
 				   </tr>
+				   <? $total1 = $total1 + ($array_exibir['quantidade'] * $array_exibir['preco']); ?>
 					<?
 					$i++;
 				}
+				?> <span class="badge badge-info">R$ <?
+				echo number_format($total1,2,",",".");
+				?> </span> <?
 ?>
 </div>
 	</div>
