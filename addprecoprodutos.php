@@ -37,6 +37,7 @@ $data = date('Y-m-d');
 	while ($array_exibir = mysql_fetch_array($buscaprodutospreco)) 
 	 {
 	$txtfichaproduto = ($array_exibir['idproduto']);
+	$txtfichaproduto2 = ($array_exibir['idproduto']);
 	$txtcodproduto = ($array_exibir['codproduto']);
 	$txtnomeproduto= ($array_exibir['nome']);
 	 }
@@ -117,8 +118,8 @@ $data = date('Y-m-d');
     ==========================================================================-->
     <fieldset>
     <div class="input-append">
-    <legend>Preços do Produto</legend>              
-    </div>
+    <legend>Preços do Produto</legend> 
+	
    </fieldset>
    <div id="mensagens"></div>
 </div>
