@@ -99,8 +99,14 @@ $meuArray1 = getArray1();
     </div>
 	<?php
 		//echo $mes;
+		if($mes == 1){
+		$ano_anterior = $data_ano - 1;
+		
+		}
+		
 		$mes_anterior = $mes - 01;
-		if($mes_anterior == -1){
+		
+		if($mes_anterior == -1 || $mes_anterior == 0){
 			$mes_anterior = 12;
 		}
 		//echo $mes_anterior;
@@ -108,11 +114,11 @@ $meuArray1 = getArray1();
 	?>
 	<!-- Bacalhau para montar o relatório - feiaço-->
 	<?
-        $sqlsaldoanterior = "select c.codgrupo, (pr.quantidade * pr.preco) as saldo_anterior from categoria c, precoproduto pr, produto p
+        $sqlsaldoanterior = "select c.codgrupo, SUM((pr.quantidadeentrada * pr.preco)) as saldo_anterior from categoria c, precoproduto pr, produto p
 					where p.categoria_codcategoria = c.codcategoria
 					and p.idproduto = pr.produto_idproduto
-					and (DATE(pr.data) >= '2013-$mes_anterior-01' AND DATE(pr.data) <= '2013-$mes_anterior-31')
-					group by c.codgrupo";
+					and (DATE(pr.data) >= '$ano_anterior-$mes_anterior-01' AND DATE(pr.data) <= '$ano_anterior-$mes_anterior-31')
+					group by c.codcategoria";
         mysql_query("SET NAMES 'utf8'");
         mysql_query('SET character_set_connection=utf8');
         mysql_query('SET character_set_client=utf8');
@@ -126,14 +132,14 @@ $meuArray1 = getArray1();
 		   
 			mysql_query($sqlupdate) or die("Erro: " . mysql_error());
 		}
-		$sqlentrada = "select c.codgrupo, (pr.quantidadeentrada * pr.preco) as entrada, (pm.quantidade * pr.preco) as saida
+		$sqlentrada = "select c.codgrupo, SUM((pr.quantidadeentrada * pr.preco)) as entrada
 							from categoria c, precoproduto pr, pedidomovimentacao pm, produto p, pedido pe
 							where p.categoria_codcategoria = c.codcategoria
 							and pr.idprecoproduto = pm.precoproduto_idprecoproduto
 							and pe.idpedido=pm.pedido_idpedido
 							and p.idproduto = pr.produto_idproduto
-							and (DATE(pm.data) >= '2013-$mes-01' AND DATE(pm.data) <= '2013-$mes-31')
-							group by codgrupo";
+							and (DATE(pm.data) >= '$data_ano-$mes-01' AND DATE(pm.data) <= '$data_ano-$mes-31')
+							group by codcategoria";
         mysql_query("SET NAMES 'utf8'");
         mysql_query('SET character_set_connection=utf8');
         mysql_query('SET character_set_client=utf8');
@@ -147,14 +153,14 @@ $meuArray1 = getArray1();
 		   
 			mysql_query($sqlupdate1) or die("Erro: " . mysql_error());
 		}
-		$sqlsaida = "select c.codgrupo, (pm.quantidade * pr.preco) as saida
+		$sqlsaida = "select c.codgrupo, SUM((pm.quantidade * pr.preco)) as saida
 						from categoria c, precoproduto pr, pedidomovimentacao pm, produto p, pedido pe
 						where p.categoria_codcategoria = c.codcategoria
 						and pr.idprecoproduto = pm.precoproduto_idprecoproduto
 						and pe.idpedido=pm.pedido_idpedido
 						and p.idproduto = pr.produto_idproduto
-						and (DATE(pm.data) >= '2013-$mes-01' AND DATE(pm.data) <= '2013-$mes-31')
-						group by codgrupo";
+						and (DATE(pm.data) >= '$data_ano-$mes-01' AND DATE(pm.data) <= '$data_ano-$mes-31')
+						group by codcategoria";
         mysql_query("SET NAMES 'utf8'");
         mysql_query('SET character_set_connection=utf8');
         mysql_query('SET character_set_client=utf8');
@@ -174,7 +180,7 @@ $meuArray1 = getArray1();
 	<div class="container">
         <legend><!--<H4><i class="icon-shopping-cart"></i> Relátorio Analítico	</h4>--></legend>
         <?
-        $sqlResultadorelatorio = "SELECT codgrupo, saldo_anterior, entrada, saida FROM relatorio_analitico";
+        $sqlResultadorelatorio = "SELECT codgrupo, saldo_anterior, entrada, saida FROM relatorio_analitico ORDER BY codgrupo asc";
         mysql_query("SET NAMES 'utf8'");
         mysql_query('SET character_set_connection=utf8');
         mysql_query('SET character_set_client=utf8');
