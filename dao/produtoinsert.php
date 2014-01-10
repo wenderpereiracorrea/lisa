@@ -11,7 +11,8 @@ $txtquantidademinima = trim($_POST["txtquantidademinima"]);
 $txtquantidademaxima = trim($_POST["txtquantidademaxima"]);
 $txtdescricao = trim($_POST["txtdescricao"]);
 $cmbcategoria = trim($_POST["cmbcategoria"]);
-$cmbunidademedida = trim($_POST["$data = date('Y-m-d H:i:s');"]);
+$cmbunidademedida = trim($_POST["cmbunidademedida"]);
+$cmbativo = trim($_POST["cmbativo"]);
 
 if(!($txtnomeproduto) || !($cmbcategoria )){
 	print "Preencha todos os campos!";
@@ -32,7 +33,7 @@ if ($_POST[inserir] == "inserir")
 $consulta = "INSERT INTO produto
 				(idproduto,nome,quantidademinima,quantidademaxima,descricao,categoria_codcategoria,unidademedida_codunidademedida,ativo,data)
 				VALUES
-				('$txtfichaproduto','$txtnomeproduto', '$txtquantidademinima', '$txtquantidademaxima', '$txtdescricao', '$cmbcategoria','$cmbunidademedida', '1','$data')";
+				('$txtfichaproduto','$txtnomeproduto', '$txtquantidademinima', '$txtquantidademaxima', '$txtdescricao', '$cmbcategoria','$cmbunidademedida', '$cmbativo','$data')";
 				mysql_query("SET NAMES 'utf8'");
 				mysql_query('SET character_set_connection=utf8');
 				mysql_query('SET character_set_client=utf8');
@@ -59,9 +60,9 @@ $consulta = "UPDATE  produto
 			  quantidademinima = '$txtquantidademinima',
 			  quantidademaxima = '$txtquantidademaxima',
 			  descricao = '$txtdescricao',
-			  categoria_codcategoria = '$cmbcategoriacodcategoria',
+			  categoria_codcategoria = '$cmbcategoria',
 			  unidademedida_codunidademedida = '$cmbunidademedida',
-			  ativo = '1',
+			  ativo = '$cmbativo',
               data = '$data'
 			 WHERE idproduto = '$txtfichaproduto'";
 			mysql_query("SET NAMES 'utf8'");
