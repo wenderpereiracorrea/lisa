@@ -170,6 +170,10 @@
 			<img src="imagens/gestor.png" alt="" class="img-rounded" width="20" height="20" />
 			<h5> Relatório Sintético </h5> 
 			</a>
+			<a target="principal" href="gerar_relatorio_pedidos.php"> 
+			<img src="imagens/gestor.png" alt="" class="img-rounded" width="20" height="20" />
+			<h5> Relatório de Pedido </h5> 
+			</a>
 	  </div>
 	  
     </div>
