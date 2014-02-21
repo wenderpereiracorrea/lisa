@@ -117,6 +117,10 @@
 			<img src="imagens/procurar.png" alt="" class="img-rounded" width="20" height="20" />
 			<h5> Listagem preço Produtos</h5> 
 			</a>
+			<a target="principal" href="listagemprodutoestoque.php"> 
+			<img src="imagens/procurar.png" alt="" class="img-rounded" width="20" height="20" />
+			<h5> Estoque atual Produtos</h5> 
+			</a>
 			<a target="principal" href="produtogrupo.php"> 
 			<img src="imagens/entradaproduto.png" alt="" class="img-rounded" width="20" height="20" />
 			<h5> Alterar Grupo do Produto</h5> 

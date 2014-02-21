@@ -166,7 +166,7 @@ jQuery("#form1").validationEngine();
 									  "SELECT	preprod . *,
 									   unimed.medida,
 									   produt . *,
-									  (preprod.quantidadeentrada * preprod.preco) as result
+									  (preprod.quantidade * preprod.preco) as result
 									   
 									   FROM
 									   precoproduto as preprod,
@@ -175,40 +175,21 @@ jQuery("#form1").validationEngine();
 									   WHERE
 									   empenho_codempenho = '$txtcodempenho' and
 									   preprod.produto_idproduto = produt.idproduto and
-									   produt.unidademedida_codunidademedida  = unimed.codunidademedida 
+									   produt.unidademedida_codunidademedida  = unimed.codunidademedida
 									   order by nome asc";
 				mysql_query("SET NAMES 'utf8'");
 				mysql_query('SET character_set_connection=utf8');
 				mysql_query('SET character_set_client=utf8');
 				mysql_query('SET character_set_results=utf8');
-				
-				
 				$Resultadoprodutospedido = mysql_query($sqlResultadoprodutospedido) or die("Erro: " . mysql_error());
 				$totalconsult = mysql_num_rows($Resultadoprodutospedido);
 		if ($totalconsult < 1) {
                 ?>
-                <!-- total de resultados da consulta
-                   SELECT	
-                   categ.codgrupo,
-                   FORMAT((SUM(preprod.quantidadeentrada * preprod.preco)),1,0) as result
-									   FROM
-									   precoproduto as preprod,
-									   produto as produt,
-									   unidademedida as unimed,
-                   categoria as categ
-									   WHERE
-									   preprod.produto_idproduto = produt.idproduto and
-									   produt.unidademedida_codunidademedida  = unimed.codunidademedida and
-                   categ.codcategoria = produt.categoria_codcategoria
-                   GROUP BY categoria_codcategoria
-									   order by idprecoproduto asc
-
-
-				-->
+                <!-- total de resultados da consulta -->
                 <!--=============================================================
                 JS
                 =============================================================-->
-		<? } elseif ($totalconsult >= 155110) { ?>
+		<? } elseif ($totalconsult >= 15110) { ?>
 			<div class="alert alert-block alert-error fade in">
 				<? echo "FAVOR ENTRAR EM CONTATO COM ADMINISTRADOR DO SISTEMA PARA OTIMIZAÇÃO DO BANCO DE DADOS" ?>
 			</div>
@@ -260,8 +241,7 @@ jQuery("#form1").validationEngine();
 						<td><label><?php echo $array_exibir['medida'] ?></label>
 						<td><label><?php echo $array_exibir['nome'] ?></label>
 						<td><input type="text" class="input-xlarge uneditable-input span2" readonly="true" value="<?php echo $array_exibir['quantidade'] ?>"></td>
-						 <?php $preco = ($array_exibir['preco']); ?>
-						<td><input type="text" class="input-xlarge uneditable-input span2" readonly="true"  value="<?php echo number_format($preco,2,",","."); ?>"></td>
+						<td><input type="text" class="input-xlarge uneditable-input span2" readonly="true"  value="<?php echo $array_exibir['preco'] ?>"></td>
                          <?php $valor = ($array_exibir['result']); ?>
                          <td><input type="text" class="input-xlarge uneditable-input span2" readonly="true"  value="<?php echo number_format($valor,2,",","."); ?>"></td>
 						<td><a href="addprodutos.php?modo=parc&idprocesso=<? echo $valprod ?>&idmovimentacao=<? echo $g_idpedido ?>">
@@ -274,14 +254,10 @@ jQuery("#form1").validationEngine();
 						<td><a href="dao/removerempenho.php?modo=parc&idproduto=<? echo $valprod ?>&idempenho=<? echo $empenho ?>" onclick="return confirm('Confirma exclusão do registro Id: <?php echo $array_exibir['codusuario'] ?>')"><i class="icon-trash"></i> Excluir</a>
 						<? } ?>
 						</td>
-						<? $total1 = $total1 + ($array_exibir['quantidadeentrada'] * $array_exibir['preco']); ?>
 				   </tr>
 					<?
 					$i++;
 				}
-				?> <span class="badge badge-info">R$ <?
-				echo number_format($total1,2,",",".");
-				?> </span> <?
 		?>
 
         <div class="alert-error" id="resposta"></div>

@@ -127,6 +127,45 @@ if(empty($_GET["G_idpedido"])) {
 					</div>
 					<div class="tab-pane" id="tab2">
 					<div class="form-actions">
+					                   
+                           <!--=============================================================
+                                    BUSCA DE PRODUTOS ID
+                                    =============================================================-->
+                   
+                    <? 
+					if(!empty($_GET["G_idpedido"])) {
+					?>
+					<label id="lblpesquisaprodutos">ID Produtos</label>
+					<select class="span10" onchange="buscaInstantanea();" name="cmbcategoria" id="pesquisaprodutos" >
+                        <!--==============================================================================
+                                COMBO-BOX COM OS PEDIDOS EM ABERTO POR Pedido por solicitante
+                            ===========================================================================-->
+                       
+                        <option value="$g_idpedido"></option>
+                        <? $sqlResultadopedidosolicitante = "
+            					SELECT idproduto,COUNT(nome) as qtd,nome 
+								FROM 
+									produto as prod,
+									precoproduto as pecvend
+                                WHERE
+									pecvend.produto_codproduto =  prod.codproduto group by nome 
+									order by idproduto ASC
+                               ";
+                        mysql_query("SET NAMES 'utf8'");
+                        mysql_query('SET character_set_connection=utf8');
+                        mysql_query('SET character_set_client=utf8');
+                        mysql_query('SET character_set_results=utf8');
+                        $Resultadopedidosolicitante = mysql_query($sqlResultadopedidosolicitante) or die("Erro: " . mysql_error());
+                        while ($array_exibir = mysql_fetch_array($Resultadopedidosolicitante)) {
+                            ?>
+                            <option value="<? echo $array_exibir['idproduto'] ?>">
+                                 <? echo $array_exibir['idproduto'] ?> --> <? echo strtoupper($array_exibir['nome']) ?>
+                                <!--............Preços disponiveis:--> <? //echo strtoupper($array_exibir['qtd']) ?>
+                            </option>
+                            <? $i++;
+                        } ?>
+                    </select> 
+					<?}?>	
                       
                            <!--=============================================================
                                     BUSCA DE PRODUTOS

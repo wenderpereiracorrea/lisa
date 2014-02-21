@@ -97,7 +97,8 @@ $data_dia = date("d");
 				ped.idpedido = pedimov.pedido_idpedido 
 				and pedimov.precoproduto_idprecoproduto = pecvenda.idprecoproduto 
 				and pecvenda.produto_idproduto = prod.idproduto 
-				and ped.setor_codigosetor = str.codsetor
+				and ped.setor_codigosetor = str.codsetor AND
+				(DATE(ped.datacriacao) >= '$data_ano-$mes-01' AND DATE(ped.datacriacao) <= '$data_ano-$mes-31')
 				order by ped.idpedido ASC";
         mysql_query("SET NAMES 'utf8'");
         mysql_query('SET character_set_connection=utf8');
@@ -158,28 +159,29 @@ $data_dia = date("d");
                         <td>R$ <?php echo number_format($array_exibir['preco'], 2, ",", "."); ?></td>
                         <td>R$ <?php echo number_format($array_exibir['total'], 2, ",", "."); ?></td>
 						<td><?php echo $array_exibir['datacriacao'] ?></td>
-						
+						<? $valorpreco = $array_exibir['preco'];
+						   $valorgeral = $array_exibir['total'];
+						?>
 					</tr>
 					
-					<? $totalsaida += $valorsaida ?>			
-					<? $totalentrada += $valorentrada ?>						
-					<? $totalanterior += $valor_anterior ?>	
-					<? $total_saldoatual += $saldo_atual ?>
-                    <?
+					<? $totalpreco += $valorpreco ?>			
+					<? $totalgeral += $valorgeral ?>						
+					<?
                     $i++;
 				}
 				?>	
 					<tr>
-						<td style="background-color: #049cdb; color: #FFFFFF;"><span><b>Total:  </span></td>
-						<td style="background-color: #049cdb; color: #FFFFFF;"><span><b>R$<? echo number_format($totalanterior,2,",",".");?></span></td>
-						<td style="background-color: #049cdb; color: #FFFFFF;"><span><b>R$<? echo number_format($totalentrada,2,",","."); ?></span></td>
-						<td style="background-color: #049cdb; color: #FFFFFF;"><span><b>R$<? echo number_format($totalsaida,2,",","."); ?></span></td>
-						<td style="background-color: #049cdb; color: #FFFFFF;"><span><b>R$<? echo number_format($total_saldoatual,2,",","."); ?></span></td>
-						<td style="background-color: #049cdb; color: #FFFFFF;"><span><b>R$<? echo number_format($total_saldoatual,2,",","."); ?></span></td>
-						<td style="background-color: #049cdb; color: #FFFFFF;"><span><b>R$<? echo number_format($total_saldoatual,2,",","."); ?></span></td>
-						<td style="background-color: #049cdb; color: #FFFFFF;"><span><b>R$<? echo number_format($total_saldoatual,2,",","."); ?></span></td>
-						<td style="background-color: #049cdb; color: #FFFFFF;"><span><b>R$<? echo number_format($total_saldoatual,2,",","."); ?></span></td>
-						<td style="background-color: #049cdb; color: #FFFFFF;"><span><b>R$<? echo number_format($total_saldoatual,2,",","."); ?></span></td>
+						<td style="background-color: #049cdb; color: #FFFFFF;"><span><b> </span></td>
+						<td style="background-color: #049cdb; color: #FFFFFF;"><span></span></td>
+						<td style="background-color: #049cdb; color: #FFFFFF;"><span></span></td>
+						<td style="background-color: #049cdb; color: #FFFFFF;"><span></span></td>
+						<td style="background-color: #049cdb; color: #FFFFFF;"><span><b></span></td>
+						<td style="background-color: #049cdb; color: #FFFFFF;"><span><b></span></td>
+						<td style="background-color: #049cdb; color: #FFFFFF;"><span></span><b>Total :</td>
+						<td style="background-color: #049cdb; color: #FFFFFF;"><span></span><b>R$<? echo number_format(($totalgeral  - 0.01),2,",","."); ?></td>
+						<td style="background-color: #049cdb; color: #FFFFFF;"><span><b></span></td>
+						
+						
 					</tr>
 				
 				</fieldset>

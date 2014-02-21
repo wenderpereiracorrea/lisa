@@ -1,3 +1,4 @@
+﻿<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
 <?
 include "header.php";
 include "conexao.php";
@@ -112,16 +113,29 @@ $meuArray1 = getArray1();
 	?>
 	
 	<?
-        $sqlsaldoanterior = "select c.codgrupo, SUM((pr.quantidadeentrada * pr.preco)) as saldo_anterior from categoria c, precoproduto pr, produto p
+       $sqlsaldoanterior = "select c.codgrupo, SUM((pr.quantidadeentrada * pr.preco)) as saldo_anterior from categoria c, precoproduto pr, produto p
 					where p.categoria_codcategoria = c.codcategoria
 					and p.idproduto = pr.produto_idproduto
 					and (DATE(pr.data) >= '$ano_anterior-$mes_anterior-01' AND DATE(pr.data) <= '$ano_anterior-$mes_anterior-31')
 					group by c.codcategoria";
+		if($mes == 1){
+		$sqlsaldoanterior1 = "select c.codgrupo, SUM((pr.quantidadeentrada * pr.preco)) as saldo_anterior from categoria c, precoproduto pr, produto p
+					where p.categoria_codcategoria = c.codcategoria
+					and p.idproduto = pr.produto_idproduto
+					and (DATE(pr.data) >= '$ano_anterior-$mes_anterior-01' AND DATE(pr.data) <= '$ano_anterior-$mes_anterior-31')
+					group by c.codcategoria";
+		}else{
+		$sqlsaldoanterior1 = "select c.codgrupo, SUM((pr.quantidade * pr.preco)) as saldo_anterior from categoria c, precoproduto pr, produto p
+					where p.categoria_codcategoria = c.codcategoria
+					and p.idproduto = pr.produto_idproduto
+					and (DATE(pr.data) < '$data_ano-$mes')
+					group by c.codcategoria";
+		}
         mysql_query("SET NAMES 'utf8'");
         mysql_query('SET character_set_connection=utf8');
         mysql_query('SET character_set_client=utf8');
         mysql_query('SET character_set_results=utf8');
-        $Resultadorelatorio = mysql_query($sqlsaldoanterior) or die("Erro: " . mysql_error());
+        $Resultadorelatorio = mysql_query($sqlsaldoanterior1) or die("Erro: " . mysql_error());
 		while($row=mysql_fetch_array($Resultadorelatorio)){
 			$codgrupo = $row['codgrupo'];
 			$saldo = $row['saldo_anterior'];
@@ -130,14 +144,13 @@ $meuArray1 = getArray1();
 		   
 			mysql_query($sqlupdate) or die("Erro: " . mysql_error());
 		}
-		$sqlentrada = "select c.codgrupo, SUM((pr.quantidadeentrada * pr.preco)) as entrada, (pm.quantidade * pr.preco) as saida
-							from categoria c, precoproduto pr, pedidomovimentacao pm, produto p, pedido pe
-							where p.categoria_codcategoria = c.codcategoria
-							and pr.idprecoproduto = pm.precoproduto_idprecoproduto
-							and pe.idpedido=pm.pedido_idpedido
-							and p.idproduto = pr.produto_idproduto
-							and (DATE(pm.data) >= '$data_ano-$mes-01' AND DATE(pm.data) <= '$data_ano-$mes-31')
-							group by codcategoria";
+		$sqlentrada = "select c.codgrupo, SUM((pr.quantidadeentrada * pr.preco)) as entrada
+           from categoria c, precoproduto pr, produto p
+    where p.categoria_codcategoria = c.codcategoria
+    and p.idproduto = pr.produto_idproduto
+    and (DATE(pr.data) >= '$data_ano-$mes-01' AND DATE(pr.data) <= '$data_ano-$mes-31')
+    group by codcategoria";
+				
         mysql_query("SET NAMES 'utf8'");
         mysql_query('SET character_set_connection=utf8');
         mysql_query('SET character_set_client=utf8');
@@ -145,7 +158,7 @@ $meuArray1 = getArray1();
         $Resultadorelatorio1 = mysql_query($sqlentrada) or die("Erro: " . mysql_error());
 		while($row1=mysql_fetch_array($Resultadorelatorio1)){
 			$codgrupo = $row1['codgrupo'];
-			$entrada = $row['entrada'];
+			$entrada = $row1['entrada'];
 				
 		    $sqlupdate1 =" update relatorio_analitico set entrada='$entrada' where codgrupo='$codgrupo'";
 		   
@@ -228,21 +241,21 @@ $meuArray1 = getArray1();
 						<td style="background-color: #049cdb; color: #FFFFFF;"><b>TOTAL</b></td>
 					</tr>
 					<tr>
-						<td>Saldo em 01 de <?if ($mes_anterior == 01 || $mes_anterior == 1){ echo "Janeiro";}
-						else if ($mes_anterior == 02 || $mes_anterior == 2){ echo "Fevereiro";}
-						else if ($mes_anterior == 03 || $mes_anterior == 3){ echo "Março";}
-						else if ($mes_anterior == 04 || $mes_anterior == 4){ echo "Abril";}
-						else if ($mes_anterior == 05 || $mes_anterior == 5){ echo "Maio";}
-						else if ($mes_anterior == 06 || $mes_anterior == 6){ echo "Junho";}
-						else if ($mes_anterior == 07 || $mes_anterior == 7){ echo "Julho";}
-						else if ($mes_anterior == 08 || $mes_anterior == 8){ echo "Agosto";}
-						else if ($mes_anterior == 09 || $mes_anterior == 9){ echo "Setembro";}
-						else if ($mes_anterior == 10){ echo "Outubro";}
-						else if ($mes_anterior == 11){ echo "Novembro";}						
-						else if ($mes_anterior == 12){ echo "Dezembro";} ?> de <? echo $data_ano ?></td>
-						<td><label>R$ <?php echo number_format($total_saldo_anterior, 2, ",", "."); ?></td>
+						<td>Saldo em 01 de <?if ($mes == 01 || $mes == 1){ echo "Janeiro";}
+						else if ($mes == 02 || $mes == 2){ echo "Fevereiro";}
+						else if ($mes == 03 || $mes == 3){ echo "Março";}
+						else if ($mes == 04 || $mes == 4){ echo "Abril";}
+						else if ($mes == 05 || $mes == 5){ echo "Maio";}
+						else if ($mes == 06 || $mes == 6){ echo "Junho";}
+						else if ($mes == 07 || $mes == 7){ echo "Julho";}
+						else if ($mes == 08 || $mes == 8){ echo "Agosto";}
+						else if ($mes == 09 || $mes == 9){ echo "Setembro";}
+						else if ($mes == 10){ echo "Outubro";}
+						else if ($mes == 11){ echo "Novembro";}						
+						else if ($mes == 12){ echo "Dezembro";}?> de <? echo $data_ano ?></td>
+						<td><label>R$ <?php echo number_format(($total_saldo_anterior), 2, ",", "."); ?></td>
 						<td>.</td>
-						<td><label>R$ <?php echo number_format($total_saldo_anterior, 2, ",", "."); ?></td>
+						<td><label>R$ <?php echo number_format(($total_saldo_anterior), 2, ",", "."); ?></td>
 					</tr>
 					<tr>
 						<td><b>ENTRADAS ORÇAMENTARIAS</b></td>
